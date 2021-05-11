@@ -1,0 +1,16 @@
+<svg width="501" height="893.0000000000001" xmlns="http://www.w3.org/2000/svg">
+ <g id="Layer_1">
+  <title>Layer 1</title>
+  <ellipse fill="#ca3e47" cx="47.36409" cy="833.78648" id="svg_1" rx="90.08006" ry="95.85598" opacity="0.89" stroke-width="0" stroke="#000" filter="url(#svg_6_blur)" transform="rotate(-7 47.3641 833.786)"/>
+  <ellipse fill="#ee6464" stroke-width="0" cx="42.85863" cy="894.1385" id="svg_4" rx="76.41503" ry="63.6792" stroke="#000" filter="url(#svg_6_blur)"/>
+  <ellipse fill="#ee6363" cx="451.13739" cy="851.711" id="svg_9" rx="90.08006" ry="95.85598" filter="url(#svg_6_blur)" opacity="0.89" stroke-width="0" stroke="#000" transform="rotate(-7 451.137 851.711)"/>
+  <ellipse fill="#ca3e47" cx="338.09935" cy="816.70217" id="svg_8" rx="97.16028" ry="97.94206" filter="url(#svg_6_blur)" stroke-width="0" stroke="#000" transform="rotate(-7 338.099 816.702)"/>
+  <ellipse fill="#d35858" cx="170.94891" cy="845.10723" id="svg_3" rx="90.08006" ry="95.85598" filter="url(#svg_6_blur)" stroke-width="0" stroke="#000" transform="rotate(-7 170.949 845.107)"/>
+  <ellipse fill="#b2333a" stroke-width="0" cx="288.14147" cy="867.72343" id="svg_6" rx="66.98108" ry="68.39618" stroke="#000" filter="url(#svg_6_blur)"/>
+ </g>
+ <defs>
+  <filter id="svg_6_blur" x="-50%" y="-50%" width="200%" height="200%">
+   <feGaussianBlur stdDeviation="1.4"/>
+  </filter>
+ </defs>
+</svg>
