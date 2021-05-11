@@ -8,10 +8,12 @@ import { StyleSheet,
     Button
  } from 'react-native';
 
-const SubmitButton = ({ message }) => {
+const SubmitButton = ({ message, onPress }) => {
     return (
         <View>
-            <TouchableOpacity style={styles.SubmitButton}>
+            <TouchableOpacity 
+                style={styles.SubmitButton}
+                onPress={onPress}>
                 <Text style={styles.SubmitButtonText}>{ message }</Text>
             </TouchableOpacity>
         </View>

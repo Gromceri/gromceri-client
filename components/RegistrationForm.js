@@ -2,17 +2,43 @@ import React from 'react'
 import { StyleSheet, 
     Text, 
     View, 
-    TextInput, 
     TouchableOpacity,
-    Button,
+    Alert,
  } from 'react-native';
 import Header from './Header'
 import Message from './Message'
 import SubmitButton from './SubmitButton';
 import UserInput from './UserInput';
+import { useState } from 'react';
 
 
 const RegistrationForm = () => {
+
+    const [password, setPassword] = useState('')
+    const [username, setUsername] = useState('')
+    const [userInfo, setUserInfo] = useState({
+        username: '',
+        password: ''
+    })
+
+    const handleUsernameChange = (user) => {
+        setUsername(user)
+        console.log(user)
+    }
+
+    const handlePasswordChange = (pass) => {
+        setPassword(pass)
+        console.log(pass)
+    }
+
+    const handleSubmitInfo = () => {
+        username && password ?
+        setUserInfo({
+            username: username,
+            password: password
+        }) : Alert.alert(`Please fill in the ${username ? 'password' : 'username'} field.`)
+    
+    }
 
     return (
         <View style={styles.RegistrationForm}>
@@ -24,13 +50,16 @@ const RegistrationForm = () => {
                 <UserInput 
                     placeholder='Username'
                     secure={false} 
+                    onChangeText={handleUsernameChange}
                 />
                 <UserInput 
                     placeholder='Password'
                     secure={true} 
+                    onChangeText={handlePasswordChange}
                 />
-                               
-                <SubmitButton message='Login' /> 
+                <SubmitButton
+                    message='Login'
+                    onPress={handleSubmitInfo} /> 
             </View>
             <TouchableOpacity>
                 <Text style={styles.SignUpLink}>New to Gromceri?{"\n"}

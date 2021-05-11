@@ -1,6 +1,10 @@
 import React from 'react';
 import { ImageBackground, StyleSheet, Text, View } from 'react-native';
 import RegistrationForm from './components/RegistrationForm'
+import 'react-native-gesture-handler';
+import { NavigationContainer } from '@react-navigation/native';
+
+
 
 const image = {
   uri: "https://res.cloudinary.com/gromceri-test/image/upload/v1620754247/picture_ytvnb6.png"

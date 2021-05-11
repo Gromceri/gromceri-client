@@ -7,16 +7,8 @@ import { StyleSheet,
     TouchableOpacityBase,
     Button
  } from 'react-native';
-import { useState } from 'react';
 
-const UserInput = ({ placeholder, secure }) => {
-
-    const [text, setText] = useState('')
-
-    const handleTextChange = (text) => {
-        setText(text)
-        console.log(text)
-    }
+const UserInput = ({ placeholder, secure, onChangeText }) => {
 
     return (
         <View>
@@ -25,7 +17,7 @@ const UserInput = ({ placeholder, secure }) => {
                 placeholder={placeholder}
                 secureTextEntry={secure}
                 placeholderTextColor="#848484" 
-                onChangeText={handleTextChange}
+                onChangeText={onChangeText}
             >
             </TextInput>
         </View>
@@ -62,4 +54,4 @@ UserInput.propTypes = {
 
 }
 
-export default UserInput
+export default UserInput 
