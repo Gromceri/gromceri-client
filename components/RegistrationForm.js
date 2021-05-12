@@ -12,33 +12,7 @@ import UserInput from './UserInput';
 import { useState } from 'react';
 
 
-const RegistrationForm = () => {
-
-    const [password, setPassword] = useState('')
-    const [username, setUsername] = useState('')
-    const [userInfo, setUserInfo] = useState({
-        username: '',
-        password: ''
-    })
-
-    const handleUsernameChange = (user) => {
-        setUsername(user)
-        console.log(user)
-    }
-
-    const handlePasswordChange = (pass) => {
-        setPassword(pass)
-        console.log(pass)
-    }
-
-    const handleSubmitInfo = () => {
-        username && password ?
-        setUserInfo({
-            username: username,
-            password: password
-        }) : Alert.alert(`Please fill in the ${username ? 'password' : 'username'} field.`)
-    
-    }
+const RegistrationForm = ({ onPress, handlePasswordChange, handleUsernameChange, handleSubmitInfo }) => {
 
     return (
         <View style={styles.RegistrationForm}>
@@ -59,7 +33,8 @@ const RegistrationForm = () => {
                 />
                 <SubmitButton
                     message='Login'
-                    onPress={handleSubmitInfo} /> 
+                    onPress={handleSubmitInfo}
+                /> 
             </View>
             <TouchableOpacity>
                 <Text style={styles.SignUpLink}>New to Gromceri?{"\n"}

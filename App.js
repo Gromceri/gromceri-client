@@ -1,36 +1,34 @@
 import React from 'react';
 import { ImageBackground, StyleSheet, Text, View } from 'react-native';
-import RegistrationForm from './components/RegistrationForm'
+import Dashboard from './components/Dashboard'
 import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import LoginScreen from './components/LoginScreen';
 
-
-
-const image = {
-  uri: "https://res.cloudinary.com/gromceri-test/image/upload/v1620754247/picture_ytvnb6.png"
-}
+const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <ImageBackground source={image} style={styles.image}>
-        <RegistrationForm />
-      </ImageBackground>
-    </View>
+    <NavigationContainer style={styles.container} >
+      <Stack.Navigator>
+        <Stack.Screen 
+          name='Login'
+          component={LoginScreen}/>
+
+        <Stack.Screen 
+          name='Dashboard'
+          component={Dashboard}/>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    display: 'flex',
-    justifyContent: 'center',
-    backgroundColor: '#313131',
-  },
-
-  image: {
-    flex: 1,
-    resizeMode: "cover",
-    justifyContent: "center"
+    // display: 'flex',
+    // justifyContent: 'center',
   },
 });
+
