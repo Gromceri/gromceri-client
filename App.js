@@ -1,10 +1,10 @@
 import React from 'react';
 import { ImageBackground, StyleSheet, Text, View } from 'react-native';
-import Dashboard from './components/Dashboard'
+import Dashboard from './components/screens/Dashboard'
 import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import LoginScreen from './components/LoginScreen';
+import LoginScreen from './components/screens/LoginScreen';
 
 const Stack = createStackNavigator();
 

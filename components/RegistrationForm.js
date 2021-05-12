@@ -3,14 +3,11 @@ import { StyleSheet,
     Text, 
     View, 
     TouchableOpacity,
-    Alert,
  } from 'react-native';
 import Header from './Header'
 import Message from './Message'
 import SubmitButton from './SubmitButton';
 import UserInput from './UserInput';
-import { useState } from 'react';
-
 
 const RegistrationForm = ({ onPress, handlePasswordChange, handleUsernameChange, handleSubmitInfo }) => {
 
