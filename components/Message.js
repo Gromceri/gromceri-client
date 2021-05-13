@@ -8,17 +8,17 @@ import { StyleSheet,
     Button
  } from 'react-native';
 
-const Message = () => {
+const Message = ({ message }) => {
     return (
         <View>
-            <Text style={styles.Message}>Welcome to Gromceri.</Text>
+            <Text style={styles.Message}>{message}</Text>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     Message: {
-        color: '#a2a2a2',
+        color: '#d0d0d0',
         fontSize: 30,
         alignSelf: 'center'
     },

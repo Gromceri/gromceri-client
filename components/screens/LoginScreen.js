@@ -40,13 +40,13 @@ export default function LoginScreen({ navigation }) {
 				password: password
 		})
 		console.log(userInfo)
-		navigation.navigate('Dashboard')
+		navigation.navigate('Dashboard', { username })
 		}		
 	}
 
 	return (
 		<View style={styles.container}>
-			
+
 		<ImageBackground 
 			source={image} 
 			style={styles.image}>
@@ -60,8 +60,7 @@ export default function LoginScreen({ navigation }) {
 		</View>
 	);
 }
-
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   container: {
     height:  "100%", 
     width: "100%",

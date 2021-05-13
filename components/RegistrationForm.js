@@ -15,7 +15,8 @@ const RegistrationForm = ({ onPress, handlePasswordChange, handleUsernameChange,
         <View style={styles.RegistrationForm}>
             <View style={styles.WelcomeText}>
                 <Header />
-                <Message />
+                <Message 
+                    message='Welcome to Gromceri' />
             </View>
             <View style={styles.SubmitInputs}>
                 <UserInput 

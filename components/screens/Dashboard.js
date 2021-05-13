@@ -1,23 +1,36 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { username } from './LoginScreen'
 import { StyleSheet, 
     Text, 
     View, 
     TextInput, 
     TouchableOpacity,
-    Button
+    Button,
+    ScrollView
  } from 'react-native';
 
-const Dashboard = () => {
+ import Message from '../Message'
+import Widgets from '../Widgets';
+
+const Dashboard = ({ route, navigation }) => {
+    const { username } = route.params
+
     return (
-        <View>
-            <Text>Hello. This is the dashboard.</Text>
-            <Button title='Go back'/>
-            
-        </View>
+        <ScrollView style={styles.container}>
+            <Message 
+                message={'\nHello,\n' + username + ' 👋\n'}/>
+            <Widgets />
+        </ScrollView>
     )
 }
-
+export const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      display: 'flex',
+      backgroundColor: '#313131',
+    }
+})
 Dashboard.propTypes = {
 
 }
