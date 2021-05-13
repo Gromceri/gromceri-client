@@ -46,7 +46,7 @@ const RegistrationForm = ({ onPress, handlePasswordChange, handleUsernameChange,
 const styles = StyleSheet.create({
     RegistrationForm: {
         width: '100%',
-        height: '80%',
+        height: '85%',
         display: 'flex',
         alignItems: 'center',
         alignContent: 'flex-start'    

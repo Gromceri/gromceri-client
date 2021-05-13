@@ -8,20 +8,23 @@ import { StyleSheet,
     Button
  } from 'react-native';
  import Widget from './Widget'
+ import styles from './Widget'
 
 const Widgets = ({message, icon}) => {
     return (
         <View>
             <Widget
-                message='Shop by supermarket'
+                message='Shop by supermarket' 
                 icon='🛒'/>
             <Widget 
                 message='Browse your recipes'
-                icon='sdfd' />
+                icon='sdfd'
+                passedStyle={{backgroundColor: '#4e79ba'}} />
             <Widget 
                 message='Add a product'/>
             <Widget 
-                message='Start a group recipe'/>
+                message='Start a group recipe'
+                passedStyle={{backgroundColor: '#4e79ba'}} />
             <Widget 
                 message='Add something'/>
 

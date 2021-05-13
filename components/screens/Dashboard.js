@@ -9,22 +9,26 @@ import { StyleSheet,
     Button,
     ScrollView
  } from 'react-native';
-
- import Message from '../Message'
+ import styles from '../Message'
+import Message from '../Message'
 import Widgets from '../Widgets';
 
 const Dashboard = ({ route, navigation }) => {
     const { username } = route.params
 
     return (
-        <ScrollView style={styles.container}>
+        <ScrollView style={dashboardStyles.container}>
             <Message 
-                message={'\nHello,\n' + username + ' 👋\n'}/>
+                passedStyle={{
+                    alignSelf:'flex-start',
+                    margin: 25,
+                }}
+                message={'Hello,\n' + username + ' 👋'}/>
             <Widgets />
         </ScrollView>
     )
 }
-export const styles = StyleSheet.create({
+export const dashboardStyles = StyleSheet.create({
     container: {
       flex: 1,
       display: 'flex',
