@@ -20,7 +20,7 @@ const RegistrationForm = ({ onPress, handlePasswordChange, handleUsernameChange,
             </View>
             <View style={styles.SubmitInputs}>
                 <UserInput 
-                    placeholder='Username'
+                    placeholder='Email'
                     secure={false} 
                     onChangeText={handleUsernameChange}
                 />

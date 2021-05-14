@@ -2,7 +2,7 @@ import React from 'react';
 import { ImageBackground, StyleSheet, Alert, View } from 'react-native';
 import RegistrationForm from '../RegistrationForm'
 import 'react-native-gesture-handler';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const image = {
   uri: "https://res.cloudinary.com/gromceri-test/image/upload/v1620754247/picture_ytvnb6.png"
@@ -11,15 +11,46 @@ const image = {
 export default function LoginScreen({ navigation }) {
 
 	const [password, setPassword] = useState('')
-	const [username, setUsername] = useState('')
-	const [userInfo, setUserInfo] = useState({
-			username: "",
-			password: ""
-	})
+	const [email, setEmail] = useState('')
+	const [userInfo, setUserInfo] = useState({})
 
-	const handleUsernameChange = (username) => {
-		setUsername(username)
-		console.log(username)
+	const handleSubmitInfo = () => {
+		console.log(email, password)
+		
+		if (!(email && password)) {
+		Alert.alert(`Please fill in the ${email ? 'password' : 'email'} field.`)
+		}
+	// empty dependency array means this effect will only run once (like componentDidMount in classes)
+	
+		else {
+		setUserInfo({
+				email: email,
+				password: password
+		})
+		}
+		data = { email, password }
+		const payload = {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(data)
+		};
+
+		fetch('https://gromceritestbackend2.herokuapp.com/api/authmanagement/login', payload)
+			.then(response => response.json())
+			.then(data => {
+				if (data.errors!==null) {
+					Alert.alert("Something went wrong. Make sure everything is correct and try again.")
+				} else {
+					navigation.navigate('Dashboard', { email })
+
+				}
+			})
+			console.log("You have sent the request bitch")
+	}
+
+	const handleUsernameChange = (email) => {
+		setEmail(email)
+		console.log(email)
 	}
 
 	const handlePasswordChange = (password) => {
@@ -27,22 +58,7 @@ export default function LoginScreen({ navigation }) {
 		console.log(password)
 	}
 
-	const handleSubmitInfo = () => {
-		console.log(username, password)
-		
-		if (!(username && password)) {
-		Alert.alert(`Please fill in the ${username ? 'password' : 'username'} field.`)
-		}
-
-		else {
-		setUserInfo({
-				username: username,
-				password: password
-		})
-		console.log(userInfo)
-		navigation.navigate('Dashboard', { username })
-		}		
-	}
+	
 
 	return (
 		<View style={styles.container}>

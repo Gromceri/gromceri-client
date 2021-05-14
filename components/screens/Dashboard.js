@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { username } from './LoginScreen'
+import { email } from './LoginScreen'
 import { StyleSheet, 
     Text, 
     View, 
@@ -14,7 +14,7 @@ import Message from '../Message'
 import Widgets from '../Widgets';
 
 const Dashboard = ({ route, navigation }) => {
-    const { username } = route.params
+    const { email } = route.params
 
     return (
         <ScrollView style={dashboardStyles.container}>
@@ -23,7 +23,7 @@ const Dashboard = ({ route, navigation }) => {
                     alignSelf:'flex-start',
                     margin: 25,
                 }}
-                message={'Hello,\n' + username + ' 👋'}/>
+                message={'Hello,\n' + email + ' 👋'}/>
             <Widgets />
         </ScrollView>
     )
