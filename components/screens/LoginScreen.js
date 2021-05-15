@@ -2,7 +2,8 @@ import React from 'react';
 import { ImageBackground, StyleSheet, Alert, View } from 'react-native';
 import RegistrationForm from '../RegistrationForm'
 import 'react-native-gesture-handler';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { saveTokens, loadTokens } from '../../utility functions/asyncStorage'
 
 const image = {
   uri: "https://res.cloudinary.com/gromceri-test/image/upload/v1620754247/picture_ytvnb6.png"
@@ -15,19 +16,6 @@ export default function LoginScreen({ navigation }) {
 	const [userInfo, setUserInfo] = useState({})
 
 	const handleSubmitInfo = () => {
-		console.log(email, password)
-		
-		if (!(email && password)) {
-		Alert.alert(`Please fill in the ${email ? 'password' : 'email'} field.`)
-		}
-	// empty dependency array means this effect will only run once (like componentDidMount in classes)
-	
-		else {
-		setUserInfo({
-				email: email,
-				password: password
-		})
-		}
 		data = { email, password }
 		const payload = {
 			method: 'POST',
@@ -39,8 +27,19 @@ export default function LoginScreen({ navigation }) {
 			.then(response => response.json())
 			.then(data => {
 				if (data.errors!==null) {
-					Alert.alert("Something went wrong. Make sure everything is correct and try again.")
+					console.log(data.errors)
+
+					if (data.errors.Email) {
+						Alert.alert(data.errors.Email[0])
+					} else if (data.errors.Password) {
+						Alert.alert(data.errors.Password[0])
+					} else {
+						Alert.alert(data.errors[0])
+					}
+
 				} else {
+					saveTokens(data.token, data.refreshToken)
+					
 					navigation.navigate('Dashboard', { email })
 
 				}
