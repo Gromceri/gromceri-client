@@ -15,6 +15,8 @@ import { StyleSheet,
 import Message from '../Message'
 import Widgets from '../Widgets';
 import { loadTokens } from '../../utility functions/asyncStorage'
+import { Ionicons } from '@expo/vector-icons';
+
 
 const Dashboard = ({ route, navigation }) => {
     const { email } = route.params

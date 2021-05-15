@@ -18,6 +18,7 @@ const UserInput = ({ placeholder, secure, onChangeText }) => {
                 secureTextEntry={secure}
                 placeholderTextColor="#848484" 
                 onChangeText={onChangeText}
+                autoCapitalize='none'
             >
             </TextInput>
         </View>

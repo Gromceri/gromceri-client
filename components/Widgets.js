@@ -15,18 +15,26 @@ const Widgets = ({message, icon}) => {
         <View>
             <Widget
                 message='Shop by supermarket' 
-                icon='🛒'/>
+                iconName='cart-outline'
+                iconBackgroundColor='#3e5dca'/>
             <Widget 
                 message='Browse your recipes'
-                icon='sdfd'
-                passedStyle={{backgroundColor: '#4e79ba'}} />
+                passedStyle={{backgroundColor: '#4e79ba'}}
+                iconName='book-outline'
+                iconBackgroundColor='#313131'/>
             <Widget 
-                message='Add a product'/>
+                message='Add a product'
+                iconName='nutrition-outline'
+                iconBackgroundColor='#3e5dca'/>
             <Widget 
                 message='Start a group recipe'
-                passedStyle={{backgroundColor: '#4e79ba'}} />
+                passedStyle={{backgroundColor: '#4e79ba'}}
+                iconName='people-outline'
+                iconBackgroundColor='#313131'/>
             <Widget 
-                message='Add something'/>
+                message='Report a problem'
+                iconName='alert-circle-outline'
+                iconBackgroundColor='#3e5dca'/>
 
         </View>
     )

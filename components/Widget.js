@@ -8,11 +8,13 @@ import { StyleSheet,
     TouchableOpacity,
     Button
  } from 'react-native';
+ import { Ionicons } from '@expo/vector-icons';
+
 
  const image = {
     uri: "https://res.cloudinary.com/gromceri-test/image/upload/v1620929772/shopping-cart-icon_faw4ea.png"
   }
-const Widget = ({ order, message, passedStyle }) => {
+const Widget = ({ order, message, passedStyle, iconName, iconBackgroundColor }) => {
     return (
         <View>
             <TouchableOpacity style={[ styles.Widget, passedStyle ]}>
@@ -25,19 +27,19 @@ const Widget = ({ order, message, passedStyle }) => {
                 </Text>
 
                 <View
-                    style={{backgroundColor: "#3e5dca",
+                    style={{backgroundColor: iconBackgroundColor,
                     borderRadius: 35,
                     borderColor: '#dedede',
-                    borderWidth: 1
+                    borderWidth: 0,
                     }}
                 >
-                    <Image 
-                        source={image}
-                        style={{ 
-                            margin: 15,
-                            padding: 15,
-                        }}
-                    />
+                    <Ionicons 
+                        name={iconName}
+                        style={{fontSize: 35,
+                        padding: 15}}
+                        color='white'>
+                        
+                    </Ionicons>
                     
                 </View>
             </TouchableOpacity>
@@ -59,14 +61,14 @@ export const styles = StyleSheet.create({
         alignContent: 'center',
         marginBottom: 15,
         shadowColor: "#000",
-shadowOffset: {
-	width: 0,
-	height: 2,
-},
-shadowOpacity: 0.25,
-shadowRadius: 3.84,
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
 
-elevation: 5,
+        elevation: 5,
 }})
 
 Widget.propTypes = {
