@@ -23,6 +23,9 @@ export default function App() {
         <Stack.Screen 
           name='Login'
           component={LoginScreen}
+          options={{
+            
+          }}
           />
 
         <Stack.Screen 
@@ -44,7 +47,21 @@ export default function App() {
                   onPress={() => alert('To be implemented.')} />
               </HeaderButtons>
             )
-          }}/>
+          ,
+          headerLeft: () => (
+            <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
+              <Item
+                buttonStyle={
+                  {
+                    color: 'white',
+                    fontSize: 35
+                  }
+                }
+                title="Profile" 
+                iconName="settings-outline"
+                onPress={() => alert('To be implemented.')} />
+            </HeaderButtons>
+          )}} />
 
       </Stack.Navigator>
     </NavigationContainer>

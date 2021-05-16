@@ -9,9 +9,8 @@ import { StyleSheet,
     Button,
     ScrollView
  } from 'react-native';
- import { useState, useEffect } from 'react';
-
- import styles from '../Message'
+import { useState, useEffect } from 'react';
+import styles from '../Message'
 import Message from '../Message'
 import Widgets from '../Widgets';
 import { loadTokens } from '../../utility functions/asyncStorage'
@@ -26,7 +25,7 @@ const Dashboard = ({ route, navigation }) => {
         async function urmom() {
             let token = (await loadTokens()).token
     
-            const data = `{"query":"{user {userName}}"}`
+            const data = `{"query":"{user {username}}"}`
             const payload = {
                 method: 'POST',
                 headers: { 
@@ -38,7 +37,7 @@ const Dashboard = ({ route, navigation }) => {
     
             fetch('https://gromceritestbackend2.herokuapp.com/graphql', payload)
                 .then(response => response.json())
-                .then(res => setUsername(res.data.user.userName))
+                .then(res => setUsername(res.data.user.username))
         }
 
         urmom()
