@@ -10,7 +10,7 @@ import { StyleSheet,
 
 const Message = ({ message, passedStyle }) => {
     return (
-        <View >
+        <View>
             <Text style={[ styles.Message, passedStyle ]}>{message}</Text>
         </View>
     )
@@ -20,8 +20,8 @@ export const styles = StyleSheet.create({
     Message: {
         color: '#d0d0d0',
         fontSize: 35,
-        alignSelf: 'center'
-    },
+        alignSelf: 'center',
+    }
 })
 
 Message.propTypes = {

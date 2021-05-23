@@ -5,6 +5,8 @@ import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator, HeaderTitle } from '@react-navigation/stack';
 import LoginScreen from './components/screens/LoginScreen';
+import Supermarkets from './components/screens/Supermarkets';
+
 import { HeaderButton, HeaderButtons, Item } from 'react-navigation-header-buttons'
 import { Ionicons } from '@expo/vector-icons';
 
@@ -62,6 +64,14 @@ export default function App() {
                 onPress={() => alert('To be implemented.')} />
             </HeaderButtons>
           )}} />
+
+        <Stack.Screen 
+          name='Supermarkets'
+          component={Supermarkets}
+          options={{
+            
+          }}
+          />
 
       </Stack.Navigator>
     </NavigationContainer>

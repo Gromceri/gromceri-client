@@ -14,10 +14,12 @@ import { StyleSheet,
  const image = {
     uri: "https://res.cloudinary.com/gromceri-test/image/upload/v1620929772/shopping-cart-icon_faw4ea.png"
   }
-const Widget = ({ order, message, passedStyle, iconName, iconBackgroundColor }) => {
+const Widget = ({ order, message, passedStyle, iconName, iconBackgroundColor, onPress }) => {
     return (
         <View>
-            <TouchableOpacity style={[ styles.Widget, passedStyle ]}>
+            <TouchableOpacity 
+                style={[ styles.Widget, passedStyle ]}
+                onPress={onPress}>
 
                 <Text 
                     style={{color: '#dedede',

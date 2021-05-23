@@ -7,7 +7,8 @@ import { StyleSheet,
     TextInput, 
     TouchableOpacity,
     Button,
-    ScrollView
+    ScrollView,
+    Alert
  } from 'react-native';
 import { useState, useEffect } from 'react';
 import styles from '../Message'
@@ -20,6 +21,26 @@ import { Ionicons } from '@expo/vector-icons';
 const Dashboard = ({ route, navigation }) => {
     const { email } = route.params
     const [username, setUsername] = useState(email)
+
+    const handleShopBySupermarketPress = () => {
+        navigation.navigate('Supermarkets')
+    }
+
+    const handleBrowseRecipesPress = () => {
+       Alert.alert('To be implemented.') 
+    }
+
+    const handleAddProductPress = () => {
+        Alert.alert('To be implemented.') 
+     }
+
+     const handleStartGroupRecipePress = () => {
+        Alert.alert('To be implemented.') 
+     }
+
+     const handleReportProblemPress = () => {
+        Alert.alert('To be implemented.') 
+     }
 
     useEffect(() => {
         async function urmom() {
@@ -37,9 +58,12 @@ const Dashboard = ({ route, navigation }) => {
     
             fetch('https://gromceritestbackend2.herokuapp.com/graphql', payload)
                 .then(response => response.json())
-                .then(res => setUsername(res.data.user.username))
+                .then(res => {
+                    console.log(res.data)
+                    setUsername(res.data.user.username)
+                }
+                )
         }
-
         urmom()
     }, [])
 
@@ -51,11 +75,17 @@ const Dashboard = ({ route, navigation }) => {
                     margin: 25,
                 }}
                 message={'Hello,\n' + username + ' 👋'}/>
-            <Widgets />
+            <Widgets 
+            onPressSupermarkets={handleShopBySupermarketPress}
+            onPressRecipes={handleBrowseRecipesPress}
+            onPressProduct={handleAddProductPress}
+            onPressGroupRecipe={handleStartGroupRecipePress} 
+            onPressReport={handleReportProblemPress}
+            />
         </ScrollView>
     )
 }
-export const dashboardStyles = StyleSheet.create({
+const dashboardStyles = StyleSheet.create({
     container: {
       flex: 1,
       display: 'flex',
