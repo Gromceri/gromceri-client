@@ -62,7 +62,7 @@ const Supermarkets = ({ navigation }) => {
                             imageURL={supermarket.image} />
                     ))}
                     <SmallWidget 
-                        location="Add shop"
+                        location="Add shop to favourites"
                         imageURL="https://res.cloudinary.com/gromceri-test/image/upload/v1621732129/supermarket-add_xkglyn.png"/>
                    
                 </View>
