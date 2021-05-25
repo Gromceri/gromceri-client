@@ -26,7 +26,6 @@ export default function LoginScreen({ navigation }) {
 		fetch('https://gromceritestbackend2.herokuapp.com/api/authmanagement/login', payload)
 			.then(response => response.json())
 			.then(data => {
-				console.log(data)
 				if (data.errors!==null) {
 					console.log(data.errors)
 
@@ -55,7 +54,6 @@ export default function LoginScreen({ navigation }) {
 
 	const handlePasswordChange = (password) => {
 		setPassword(password)
-		console.log(password)
 	}
 
 	

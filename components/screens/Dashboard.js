@@ -59,7 +59,6 @@ const Dashboard = ({ route, navigation }) => {
             fetch('https://gromceritestbackend2.herokuapp.com/graphql', payload)
                 .then(response => response.json())
                 .then(res => {
-                    console.log(res.data)
                     setUsername(res.data.user.username)
                 }
                 )

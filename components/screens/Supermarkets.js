@@ -16,32 +16,47 @@ import { StyleSheet,
 import SmallWidget from '../SmallWidget';
 import { useState } from 'react/cjs/react.development';
 
+export let arrayOfLocations;
 const Supermarkets = ({ navigation }) => {
     const [supermarkets, setSupermarkets] = useState([])
 
+    const handleAddSupermarketPress = () => {
+        navigation.navigate('Add Supermarkets')
+    }
+
     useEffect(() => {
+        let isCancelled = false;
+
+        const getSupermarkets = async () => {
+            if (!isCancelled) {
+                let token = (await loadTokens()).token
+            
+            const data = `{"query":"{user {supermarkets {name, location, image}}}"}`       
+            const payload = {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                 },
+                body: data
+            };
+
+            const response = await fetch('https://gromceritestbackend2.herokuapp.com/graphql', payload)
+                    .then(response => response.json())
+                    .then(res => {
+                        setSupermarkets(res.data.user.supermarkets)
+                        arrayOfLocations = res.data.user.supermarkets.map(i => i.location)
+                    })
+            }
+        }
         getSupermarkets()
+        
+        return () => {
+            isCancelled = true;
+        };
+
     }, [])
 
-    const getSupermarkets = async () => {
-        let token = (await loadTokens()).token
-
-        const data = `{"query":"{user {supermarkets {name, location, image}}}"}`       
-        const payload = {
-            method: 'POST',
-            headers: { 
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-             },
-            body: data
-        };
-        const response = await fetch('https://gromceritestbackend2.herokuapp.com/graphql', payload)
-                .then(response => response.json())
-                .then(res => {
-                    setSupermarkets(res.data.user.supermarkets)
-                })
-
-    }
 
     return (
         <View style={styles.container} >
@@ -49,7 +64,6 @@ const Supermarkets = ({ navigation }) => {
                     alignContent:'center',
                     margin: 25,
                     textAlign: 'center',
-
                 }}
                 message='Time to pick a supermarket.'
             />
@@ -62,6 +76,7 @@ const Supermarkets = ({ navigation }) => {
                             imageURL={supermarket.image} />
                     ))}
                     <SmallWidget 
+                        onPress={handleAddSupermarketPress}
                         location="Add shop to favourites"
                         imageURL="https://res.cloudinary.com/gromceri-test/image/upload/v1621732129/supermarket-add_xkglyn.png"/>
                    
