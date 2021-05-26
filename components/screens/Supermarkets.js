@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { loadTokens } from '../../utility functions/asyncStorage'
+var _ = require('lodash');
 
 import { StyleSheet, 
     Text, 
@@ -21,14 +22,10 @@ const Supermarkets = ({ navigation }) => {
     const [supermarkets, setSupermarkets] = useState([])
 
     const handleAddSupermarketPress = () => {
-        navigation.navigate('Add Supermarkets')
+        navigation.navigate('Add Supermarkets', { supermarkets, setSupermarkets, arrayOfLocations })
     }
 
-    useEffect(() => {
-        let isCancelled = false;
-
-        const getSupermarkets = async () => {
-            if (!isCancelled) {
+    const getSupermarkets = async () => {
                 let token = (await loadTokens()).token
             
             const data = `{"query":"{user {supermarkets {name, location, image}}}"}`       
@@ -44,18 +41,30 @@ const Supermarkets = ({ navigation }) => {
             const response = await fetch('https://gromceritestbackend2.herokuapp.com/graphql', payload)
                     .then(response => response.json())
                     .then(res => {
+                        console.log("The response has been sent")
+                        
+                        // if (_.isEqual(res.data.user.supermarkets, supermarkets)) {
+                        //     console.log("The state is the same", res.data.user.supermarkets, supermarkets)
+                        // } else {
+                        //     console.log("The state has changed", res.data.user.supermarkets, supermarkets)
+
+                        // }
                         setSupermarkets(res.data.user.supermarkets)
                         arrayOfLocations = res.data.user.supermarkets.map(i => i.location)
                     })
-            }
+            
         }
+    useEffect(() => {
+        let isCancelled = false;
+
+        
         getSupermarkets()
         
         return () => {
             isCancelled = true;
         };
 
-    }, [])
+    }, [supermarkets])
 
 
     return (
