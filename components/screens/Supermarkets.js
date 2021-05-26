@@ -22,7 +22,7 @@ const Supermarkets = ({ navigation }) => {
     const [supermarkets, setSupermarkets] = useState([])
 
     const handleAddSupermarketPress = () => {
-        navigation.navigate('Add Supermarkets', { supermarkets, setSupermarkets, arrayOfLocations })
+        navigation.navigate('Add Supermarkets', { getSupermarkets })
     }
 
     const getSupermarkets = async () => {
@@ -64,7 +64,7 @@ const Supermarkets = ({ navigation }) => {
             isCancelled = true;
         };
 
-    }, [supermarkets])
+    }, [])
 
 
     return (

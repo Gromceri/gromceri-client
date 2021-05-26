@@ -8,7 +8,7 @@ import { arrayOfLocations } from './Supermarkets'
 import AwesomeAlert from 'react-native-awesome-alerts';
 
 const AddSupermarkets = ({ route }) => {
-    const { supermarkets, setSupermarkets, arrayOfLocations } = route.params
+    const { getSupermarkets } = route.params
 
     const [allSupermarkets, setAllSupermarkets] = useState([])
     const [alert, setShowAlert] = useState(false)
@@ -16,35 +16,7 @@ const AddSupermarkets = ({ route }) => {
     const [supermarketId, setSupermarketId] = useState();
     const [showProgress, setShowProgress] = useState(false)
 
-    const getSupermarkets = async () => {
-        let token = (await loadTokens()).token
-        
-        const data = `{"query":"{user {supermarkets {name, location, image}}}"}`       
-        const payload = {
-            method: 'POST',
-            headers: { 
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-             },
-            body: data
-        };
-
-        const response = await fetch('https://gromceritestbackend2.herokuapp.com/graphql', payload)
-                .then(response => response.json())
-                .then(res => {
-                    console.log("The response has been sent")
-                    setSupermarkets(res.data.user.supermarkets)
-
-                    // if (_.isEqual(res.data.user.supermarkets, supermarkets)) {
-                    //     console.log("The state is the same", res.data.user.supermarkets, supermarkets)
-                    // } else {
-                    //     console.log("The state has changed", res.data.user.supermarkets, supermarkets)
-
-                    // }
-                    arrayOfLocations = res.data.user.supermarkets.map(i => i.location)
-                })
-        
-    }
+ 
     const handleAddFavShopPress = (x) => {
         setAlertMessage(`Add ${x.name} on ${x.location} to favourites?`)
         showAlert()
@@ -75,11 +47,11 @@ const AddSupermarkets = ({ route }) => {
                     console.log(supermarketId)
                     setAllSupermarkets(allSupermarkets.filter(supermarket => supermarket.id !== supermarketId))
                 setShowAlert(false)
+                console.log("Add supermarket request")
                 })
+        getSupermarkets()
                 
         }
-        getSupermarkets()
-            
       
     const showAlert = () => {
         setShowAlert(true)
