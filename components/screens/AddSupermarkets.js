@@ -61,13 +61,6 @@ const AddSupermarkets = ({ route }) => {
         setShowAlert(false)
     }
 
-    const hideAlertAndSupermarket = () => {
-        
-
-        
-    }
-
-
 
     useEffect(() => {
         let isCancelled = false;
@@ -107,7 +100,7 @@ const AddSupermarkets = ({ route }) => {
                     margin: 25,
                     textAlign: 'center'
                 }}
-                message="your mom" />
+                message="Add a favourite supermarket." />
             <ScrollView >
                 <View style={styles.scrollContainer}>
                     {allSupermarkets.map(supermarket => (

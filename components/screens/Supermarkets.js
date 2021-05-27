@@ -2,15 +2,13 @@ import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { loadTokens } from '../../utility functions/asyncStorage'
 var _ = require('lodash');
-import Products from './Products'
+import Categories from './Categories'
+import AwesomeAlert from 'react-native-awesome-alerts';
 
 import { StyleSheet, 
     Text, 
     View, 
-    TextInput, 
-    TouchableOpacity,
-    Button,
-    FlatList,
+    Alert,
     ScrollView
  } from 'react-native';
  import dashboardStyles from './Dashboard'
@@ -21,10 +19,58 @@ import { useState } from 'react/cjs/react.development';
 export let arrayOfLocations;
 const Supermarkets = ({ navigation }) => {
     const [supermarkets, setSupermarkets] = useState([])
+    const [alert, setShowAlert] = useState(false)
+    const [alertMessage, setAlertMessage] = useState("Add to favourites?")
+    const [supermarketId, setSupermarketId] = useState();
+    const [showProgress, setShowProgress] = useState(false)
 
     const handlePickSupermarketPress = (supermarket) => {
-        navigation.navigate('Products', { supermarket })
+        navigation.navigate('Categories', { supermarket })
     }
+
+    const showAlert = () => {
+        setShowAlert(true)
+    }
+
+    const hideAlert = () => {
+        setShowAlert(false)
+    }
+
+    const cancelFavSupermarket = () => {
+        hideAlert()
+    }
+
+    const handleDeleteFavShopLongPress = (x) => {
+        setAlertMessage(`Delete ${x.name} on ${x.location} from favourites?`)
+        showAlert()
+        setSupermarketId(x.id)
+    }
+
+    const confirmDeleteFavShopLongPress = async (supermarket) => {
+        let token = (await loadTokens()).token
+        setSupermarketId(supermarket.id)
+
+        console.log(supermarket.id)
+
+        const data = `{"query":"mutation {  removeUserSupermarkets(input: ${supermarketId}) {  email  }}"}`       
+        const payload = {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+                },
+            body: data
+        };
+
+        const response = await fetch('https://gromceritestbackend2.herokuapp.com/graphql', payload)
+                .then(response => response.json())
+                .then(res => {
+                    console.log(supermarketId)
+                    setSupermarkets(supermarkets.filter(supermarket => supermarket.id !== supermarketId))
+                    setShowAlert(false)
+
+                }) 
+        }
 
     const handleAddSupermarketPress = () => {
         navigation.navigate('Add Supermarkets', { getSupermarkets })
@@ -33,7 +79,7 @@ const Supermarkets = ({ navigation }) => {
     const getSupermarkets = async () => {
         let token = (await loadTokens()).token
         
-        const data = `{"query":"{user {supermarkets {name, location, image}}}"}`       
+        const data = `{"query":"{user {supermarkets {id, name, location, image}}}"}`       
         const payload = {
             method: 'POST',
             headers: { 
@@ -79,6 +125,9 @@ const Supermarkets = ({ navigation }) => {
                             onPress={() => {
                                 handlePickSupermarketPress(supermarket)
                             }}
+                            onLongPress={() => {
+                                handleDeleteFavShopLongPress(supermarket)
+                            }}
                             key={supermarket.location}
                             location={supermarket.location}
                             imageURL={supermarket.image} />
@@ -90,6 +139,21 @@ const Supermarkets = ({ navigation }) => {
                    
                 </View>
             </ScrollView>
+            <AwesomeAlert 
+                show={alert}
+                showProgress={false}
+                title="Delete supermarket"
+                message={alertMessage}
+                closeOnTouchOutside={true}
+                closeOnHardwareBackPress={false}
+                showCancelButton={true}
+                showConfirmButton={true}
+                cancelText="Cancel"
+                confirmText="Delete"
+                confirmButtonColor="#d25960"
+                onConfirmPressed={confirmDeleteFavShopLongPress}
+                onCancelPressed={cancelFavSupermarket}
+            />
         </View>
     )
 }

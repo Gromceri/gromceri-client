@@ -6,7 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator, HeaderTitle } from '@react-navigation/stack';
 import LoginScreen from './components/screens/LoginScreen';
 import Supermarkets from './components/screens/Supermarkets';
-import Products from './components/screens/Products'
+import Categories from './components/screens/Categories'
 
 import AddSupermarkets from './components/screens/AddSupermarkets';
 import { HeaderButton, HeaderButtons, Item } from 'react-navigation-header-buttons'
@@ -84,8 +84,8 @@ export default function App() {
           />
 
           <Stack.Screen 
-          name='Products'
-          component={Products}
+          name='Categories'
+          component={Categories}
           options={{
             
           }}

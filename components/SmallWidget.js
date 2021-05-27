@@ -3,12 +3,13 @@ import PropTypes from 'prop-types'
 import { TouchableOpacity, StyleSheet, View, Text, Dimensions, Image } from 'react-native'
 
 const width = Dimensions.get('window').width
-const SmallWidget = ({ name, location, imageURL, passedStyle, onPress }) => {
+const SmallWidget = ({ name, location, imageURL, passedStyle, onPress, onLongPress }) => {
     return (
         <View style={styles.widgetContainer}>
             <TouchableOpacity 
                 style={styles.smallWidget}
                 onPress={onPress}
+                onLongPress={onLongPress}
                 >
                 <Image 
                     source={{
