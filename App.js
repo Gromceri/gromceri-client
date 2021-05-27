@@ -6,6 +6,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator, HeaderTitle } from '@react-navigation/stack';
 import LoginScreen from './components/screens/LoginScreen';
 import Supermarkets from './components/screens/Supermarkets';
+import Products from './components/screens/Products'
+
 import AddSupermarkets from './components/screens/AddSupermarkets';
 import { HeaderButton, HeaderButtons, Item } from 'react-navigation-header-buttons'
 import { Ionicons } from '@expo/vector-icons';
@@ -76,6 +78,14 @@ export default function App() {
         <Stack.Screen 
           name='Add Supermarkets'
           component={AddSupermarkets}
+          options={{
+            
+          }}
+          />
+
+          <Stack.Screen 
+          name='Products'
+          component={Products}
           options={{
             
           }}

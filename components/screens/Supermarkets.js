@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { loadTokens } from '../../utility functions/asyncStorage'
 var _ = require('lodash');
+import Products from './Products'
 
 import { StyleSheet, 
     Text, 
@@ -21,43 +22,38 @@ export let arrayOfLocations;
 const Supermarkets = ({ navigation }) => {
     const [supermarkets, setSupermarkets] = useState([])
 
+    const handlePickSupermarketPress = (supermarket) => {
+        navigation.navigate('Products', { supermarket })
+    }
+
     const handleAddSupermarketPress = () => {
         navigation.navigate('Add Supermarkets', { getSupermarkets })
     }
 
     const getSupermarkets = async () => {
-                let token = (await loadTokens()).token
-            
-            const data = `{"query":"{user {supermarkets {name, location, image}}}"}`       
-            const payload = {
-                method: 'POST',
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                 },
-                body: data
-            };
+        let token = (await loadTokens()).token
+        
+        const data = `{"query":"{user {supermarkets {name, location, image}}}"}`       
+        const payload = {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+                },
+            body: data
+        };
 
-            const response = await fetch('https://gromceritestbackend2.herokuapp.com/graphql', payload)
-                    .then(response => response.json())
-                    .then(res => {
-                        console.log("The response has been sent")
-                        
-                        // if (_.isEqual(res.data.user.supermarkets, supermarkets)) {
-                        //     console.log("The state is the same", res.data.user.supermarkets, supermarkets)
-                        // } else {
-                        //     console.log("The state has changed", res.data.user.supermarkets, supermarkets)
-
-                        // }
-                        setSupermarkets(res.data.user.supermarkets)
-                        arrayOfLocations = res.data.user.supermarkets.map(i => i.location)
-                    })
+        const response = await fetch('https://gromceritestbackend2.herokuapp.com/graphql', payload)
+                .then(response => response.json())
+                .then(res => {
+                    console.log("The response has been sent")
+                    setSupermarkets(res.data.user.supermarkets)
+                    arrayOfLocations = res.data.user.supermarkets.map(i => i.location)
+                })
             
         }
     useEffect(() => {
         let isCancelled = false;
-
-        
         getSupermarkets()
         
         return () => {
@@ -80,6 +76,9 @@ const Supermarkets = ({ navigation }) => {
                 <View style={styles.scrollContainer}>
                     {supermarkets.map(supermarket => (
                         <SmallWidget 
+                            onPress={() => {
+                                handlePickSupermarketPress(supermarket)
+                            }}
                             key={supermarket.location}
                             location={supermarket.location}
                             imageURL={supermarket.image} />
