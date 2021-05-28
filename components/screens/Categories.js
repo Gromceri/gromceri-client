@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { loadTokens } from '../../utility functions/asyncStorage'
-import PropTypes from 'prop-types'
-import { ImageBackground, StyleSheet, Text, View, Button, Image, ScrollView, Alert } from 'react-native';
+import { StyleSheet, View, Image, ScrollView, Alert } from 'react-native';
 import Message from '../Message'
 import SmallWidget from '../SmallWidget';
-import { SearchBar } from 'react-native-elements';
 import UserSearchBar from '../UserSearchBar'
+import { getData } from '../../utility functions/queryFetch'
 
+/**
+ * Categories screen. 
+ */
 
 const Categories = ({ route, navigation }) => {
     const { supermarket } = route.params
@@ -15,52 +16,49 @@ const Categories = ({ route, navigation }) => {
     const [search, setSearch] = useState('')
     const [searchResults, setSearchResults] = useState([]);
 
+    /**
+     * Sets the search to the string input.
+     * @param s the search string
+     */
+
     const handleSearchUpdate = (s) => {
         setSearch(s)
         console.log(search)
     }
 
-    const getCategories = async () => {
-        let token = (await loadTokens()).token
-        
-        const data = `{"query":" {productCategories {id, name, image}}"}`       
-        const payload = {
-            method: 'POST',
-            headers: { 
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-                },
-            body: data
-        };
+    /**
+     * useEffect hook that fires with each
+     * user input search in the search bar.
+     * Used for filtering the categories.
+     */
 
-        const response = await fetch('https://gromceritestbackend2.herokuapp.com/graphql', payload)
-                .then(response => response.json())
-                .then(res => {
-                    console.log(res.data.productCategories)
-                    setCategories(res.data.productCategories)
-                })
-            
-    }
     useEffect(() => {
-        console.log(categories.map(category => category.name.toLowerCase().includes(search)), search);
-        const results = categories.filter(category => category.name.toLowerCase().includes(search))
+        const results = categories
+        .filter(category => category.name.toLowerCase().includes(search))
         setSearchResults(results)
-        console.log("Results: ", results);
 
     }, [search])
 
-    useEffect(() => {
-        let isCancelled = false;
-        getCategories()
-        
-        return () => {
-            isCancelled = true;
-        };
+    /**
+     * useEffect hook that fires on render.
+     * Uses getData utility function to fetch
+     * and display the data from the server.
+     * Used to get the product categories.
+     */
 
+    useEffect(() => {
+        const getDataSync = async function() {
+            getData(`{"query":" {productCategories {id, name, image}}"}`)
+            .then(val =>  setCategories(val.productCategories))
+        }
+        getDataSync()  
     }, [])
+
     return (
         <View style={styles.container}>
-            <View style={{marginTop: 5, marginBottom: 25, marginRight: 20, marginLeft: 20, display: "flex", alignItems: 'center'}}>
+
+            <View style={styles.mediumContainer}>
+
                 <View style={styles.smallContainer}>
                     <Message 
                         message="I am going to"
@@ -75,19 +73,20 @@ const Categories = ({ route, navigation }) => {
                     />
                 </View>
                 <View>
-                    <Message message="searching for..."
+                    <Message 
+                        message="searching for..."
                     />
                     <UserSearchBar 
-                placeholderMessage="Search categories" 
-                value={search}
-                onChangeText={handleSearchUpdate}
-                />
+                        placeholderMessage="Search categories" 
+                        value={search}
+                        onChangeText={handleSearchUpdate}
+                    />
                 </View>
-                
             </View>
             <ScrollView>
-                <View style={styles.scrollContainer}>
-                <SmallWidget 
+                <View 
+                    style={styles.scrollContainer}>
+                    <SmallWidget 
                         onPress={() => {
                             Alert.alert("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
                         }}
@@ -95,24 +94,23 @@ const Categories = ({ route, navigation }) => {
                         imageURL="https://res.cloudinary.com/gromceri-test/image/upload/v1622160078/Food%20categories/all_hkffhp.jpg"
                     />
                     {!search ? categories.map(categories => (
-                        <SmallWidget 
-                            onPress={() => {
-                                Alert.alert("BITHCHHHHHHHHHHHHHH")
-                            }}
-                            key={categories.id}
-                            location={categories.name.split(/(?=[A-Z])/).join(' ')}
-                            imageURL={categories.image} />
-                    )) : searchResults.map(results => (
-                        <SmallWidget 
-                            onPress={() => {
-                                Alert.alert("BITHCHHHHHHHHHHHHHH")
-                            }}
-                            key={results.id}
-                            location={results.name.split(/(?=[A-Z])/).join(' ')}
-                            imageURL={results.image} />
-                    )) }
-                    
-                
+                    <SmallWidget 
+                        onPress={() => {
+                            Alert.alert("BITHCHHHHHHHHHHHHHH")
+                        }}
+                        key={categories.id}
+                        location={categories.name.split(/(?=[A-Z])/).join(' ')}
+                        imageURL={categories.image} /> )) 
+
+                        : searchResults.map(results => (
+                    <SmallWidget 
+                        onPress={() => {
+                            Alert.alert("BITHCHHHHHHHHHHHHHH")
+                        }}
+                        key={results.id}
+                        location={results.name.split(/(?=[A-Z])/).join(' ')}
+                        imageURL={results.image} /> )) 
+                    }
                 </View>
             </ScrollView>
              
@@ -124,6 +122,15 @@ const styles = StyleSheet.create({
         flex: 1,
         display: "flex",
         backgroundColor: '#313131',
+    },
+
+    mediumContainer: {
+        marginTop: 5, 
+        marginBottom: 25, 
+        marginRight: 20, 
+        marginLeft: 20, 
+        display: "flex", 
+        alignItems: 'center'
     },
 
     smallContainer: {
@@ -148,10 +155,5 @@ const styles = StyleSheet.create({
         margin: 15
     },
 })
-
-Categories.propTypes = {
-
-
-}
 
 export default Categories

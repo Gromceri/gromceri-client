@@ -1,22 +1,18 @@
-import React, { useEffect } from 'react'
-import PropTypes from 'prop-types'
+import React, { useEffect, useState } from 'react'
 import { loadTokens } from '../../utility functions/asyncStorage'
 var _ = require('lodash');
-import Categories from './Categories'
 import AwesomeAlert from 'react-native-awesome-alerts';
-
 import { StyleSheet, 
-    Text, 
     View, 
-    Alert,
     ScrollView
  } from 'react-native';
- import dashboardStyles from './Dashboard'
  import Message from '../Message'
 import SmallWidget from '../SmallWidget';
-import { useState } from 'react/cjs/react.development';
+import { getData } from '../../utility functions/queryFetch'
+
 
 export let arrayOfLocations;
+
 const Supermarkets = ({ navigation }) => {
     const [supermarkets, setSupermarkets] = useState([])
     const [alert, setShowAlert] = useState(false)
@@ -76,37 +72,18 @@ const Supermarkets = ({ navigation }) => {
         navigation.navigate('Add Supermarkets', { getSupermarkets })
     }
 
-    const getSupermarkets = async () => {
-        let token = (await loadTokens()).token
-        
-        const data = `{"query":"{user {supermarkets {id, name, location, image}}}"}`       
-        const payload = {
-            method: 'POST',
-            headers: { 
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-                },
-            body: data
-        };
-
-        const response = await fetch('https://gromceritestbackend2.herokuapp.com/graphql', payload)
-                .then(response => response.json())
-                .then(res => {
-                    console.log("The response has been sent")
-                    setSupermarkets(res.data.user.supermarkets)
-                    arrayOfLocations = res.data.user.supermarkets.map(i => i.location)
-                })
-            
-    }
     useEffect(() => {
-        let isCancelled = false;
-        getSupermarkets()
-        
-        return () => {
-            isCancelled = true;
-        };
-
+        const getDataSync = async function() {
+            getData(`{"query":"{user {supermarkets {id, name, location, image}}}"}`)
+            .then(val =>  {
+                setSupermarkets(val.user.supermarkets)
+                console.log("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB", val.user.supermarkets);
+                arrayOfLocations = val.user.supermarkets.map(i => i.location)
+        })
+    }
+        getDataSync()  
     }, [])
+
 
 
     return (
