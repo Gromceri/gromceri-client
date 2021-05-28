@@ -28,7 +28,7 @@ const SmallWidget = ({ name, location, imageURL, passedStyle, onPress, onLongPre
 const styles = StyleSheet.create({
     widgetContainer: {
         display: 'flex',
-        width: (width / 2 - 7),
+        width: (width / 2 - 10),
         alignContent: "center",
 
 
@@ -36,21 +36,21 @@ const styles = StyleSheet.create({
 
     smallWidget: {
         backgroundColor: '#424141',
-        borderRadius: 7,
+        borderRadius: 7.5,
         padding:10,
         height: 190,
-        marginBottom: 5,
+        marginBottom: 7,
         justifyContent: 'space-between',
 
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
-            height: 2,
+            height: 11,
         },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
+        shadowOpacity: 0.22,
+        shadowRadius: 4.84,
         alignItems: "center",
-        elevation: 5,
+        elevation: 6,
     },
 
     image: {

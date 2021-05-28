@@ -97,7 +97,7 @@ const Supermarkets = ({ navigation }) => {
                     arrayOfLocations = res.data.user.supermarkets.map(i => i.location)
                 })
             
-        }
+    }
     useEffect(() => {
         let isCancelled = false;
         getSupermarkets()
