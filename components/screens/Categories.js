@@ -4,11 +4,20 @@ import PropTypes from 'prop-types'
 import { ImageBackground, StyleSheet, Text, View, Button, Image, ScrollView, Alert } from 'react-native';
 import Message from '../Message'
 import SmallWidget from '../SmallWidget';
+import { SearchBar } from 'react-native-elements';
+
 
 const Categories = ({ route, navigation }) => {
     const { supermarket } = route.params
     const imageURL = supermarket.image
     const [categories, setCategories] = useState([])
+    const [search, setSearch] = useState('')
+    const [searchResults, setSearchResults] = useState([]);
+
+    const handleSearchUpdate = (s) => {
+        setSearch(s)
+        console.log(search)
+    }
 
     const getCategories = async () => {
         let token = (await loadTokens()).token
@@ -31,6 +40,14 @@ const Categories = ({ route, navigation }) => {
                 })
             
     }
+    useEffect(() => {
+        console.log(categories.map(category => category.name.toLowerCase().includes(search)), search);
+        const results = categories.filter(category => category.name.toLowerCase().includes(search))
+        setSearchResults(results)
+        console.log("Results: ", results);
+
+    }, [search])
+
     useEffect(() => {
         let isCancelled = false;
         getCategories()
@@ -59,7 +76,13 @@ const Categories = ({ route, navigation }) => {
                 <View>
                     <Message message="searching for..."
                     />
+                    <SearchBar 
+                placeholder="Search categories" 
+                value={search}
+                onChangeText={handleSearchUpdate}
+                />
                 </View>
+                
             </View>
             <ScrollView>
                 <View style={styles.scrollContainer}>
@@ -70,7 +93,7 @@ const Categories = ({ route, navigation }) => {
                         location="Browse all"
                         imageURL="https://res.cloudinary.com/gromceri-test/image/upload/v1622160078/Food%20categories/all_hkffhp.jpg"
                     />
-                    {categories.map(categories => (
+                    {!search ? categories.map(categories => (
                         <SmallWidget 
                             onPress={() => {
                                 Alert.alert("BITHCHHHHHHHHHHHHHH")
@@ -78,7 +101,15 @@ const Categories = ({ route, navigation }) => {
                             key={categories.id}
                             location={categories.name.split(/(?=[A-Z])/).join(' ')}
                             imageURL={categories.image} />
-                    ))}
+                    )) : searchResults.map(results => (
+                        <SmallWidget 
+                            onPress={() => {
+                                Alert.alert("BITHCHHHHHHHHHHHHHH")
+                            }}
+                            key={results.id}
+                            location={results.name.split(/(?=[A-Z])/).join(' ')}
+                            imageURL={results.image} />
+                    )) }
                     
                 
                 </View>

@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { saveTokens, loadTokens } from '../../utility functions/asyncStorage'
 
 const image = {
-  uri: "https://res.cloudinary.com/gromceri-test/image/upload/v1620754247/picture_ytvnb6.png"
+  uri: "https://res.cloudinary.com/gromceri-test/image/upload/v1622163063/Method_Draw_Image_3_k4qxgq.png"
 }
 
 export default function LoginScreen({ navigation }) {
