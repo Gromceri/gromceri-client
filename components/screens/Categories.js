@@ -5,6 +5,7 @@ import { ImageBackground, StyleSheet, Text, View, Button, Image, ScrollView, Ale
 import Message from '../Message'
 import SmallWidget from '../SmallWidget';
 import { SearchBar } from 'react-native-elements';
+import UserSearchBar from '../UserSearchBar'
 
 
 const Categories = ({ route, navigation }) => {
@@ -76,8 +77,8 @@ const Categories = ({ route, navigation }) => {
                 <View>
                     <Message message="searching for..."
                     />
-                    <SearchBar 
-                placeholder="Search categories" 
+                    <UserSearchBar 
+                placeholderMessage="Search categories" 
                 value={search}
                 onChangeText={handleSearchUpdate}
                 />
