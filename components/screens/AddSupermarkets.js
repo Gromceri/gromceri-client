@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types'
+import { getData } from '../../utility functions/queryFetch'
 import { TouchableOpacity, StyleSheet, View, Text, Dimensions, Image, ScrollView, Alert } from 'react-native'
 import Message from '../Message'
 import SmallWidget from '../SmallWidget'
@@ -8,7 +8,7 @@ import { arrayOfLocations } from './Supermarkets'
 import AwesomeAlert from 'react-native-awesome-alerts';
 
 const AddSupermarkets = ({ route }) => {
-    const { getSupermarkets } = route.params
+    const { setSupermarkets } = route.params
 
     const [allSupermarkets, setAllSupermarkets] = useState([])
     const [alert, setShowAlert] = useState(false)
@@ -49,7 +49,7 @@ const AddSupermarkets = ({ route }) => {
                 setShowAlert(false)
                 console.log("Add supermarket request")
                 })
-        getSupermarkets()
+                getDataSync()
                 
         }
       
@@ -62,35 +62,21 @@ const AddSupermarkets = ({ route }) => {
     }
 
 
+    const getDataSync = async function() {
+        getData(`{"query":"{user {supermarkets {id, name, location, image}}}"}`)
+        .then(val =>  {
+            setSupermarkets(val.user.supermarkets)
+        })
+    }
+
     useEffect(() => {
-        let isCancelled = false;
-        const getAllSupermarkets = async () => {
-            let token = (await loadTokens()).token
-            
-            
-            const data = `{"query":"{ nonFavouriteSupermarkets {  id, name, location, image }}"}`
-            const payload = {
-                method: 'POST',
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                 },
-                body: data
-            };
-
-            const response = await fetch('https://gromceritestbackend2.herokuapp.com/graphql', payload)
-                    .then(response => response.json())
-                    .then(res => {
-                        setAllSupermarkets(res.data.nonFavouriteSupermarkets)
-                    })
-
+        const getAllDataSync = async function() {
+            getData(`{"query":"{ nonFavouriteSupermarkets {  id, name, location, image }}"}`)
+            .then(val =>  {
+                setAllSupermarkets(val.nonFavouriteSupermarkets)
+            })
         }
-        getAllSupermarkets()
-        
-        return () => {
-            isCancelled = true;
-        };
-
+        getAllDataSync()
     }, [])
 
     return (

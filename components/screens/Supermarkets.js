@@ -69,7 +69,7 @@ const Supermarkets = ({ navigation }) => {
         }
 
     const handleAddSupermarketPress = () => {
-        navigation.navigate('Add Supermarkets', { getSupermarkets })
+        navigation.navigate('Add Supermarkets', { setSupermarkets })
     }
 
     useEffect(() => {
