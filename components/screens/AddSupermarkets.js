@@ -16,16 +16,56 @@ const AddSupermarkets = ({ route }) => {
     const [supermarketId, setSupermarketId] = useState();
     const [showProgress, setShowProgress] = useState(false)
 
+
+    /**
+     * Makes the alert visible
+     * by changing its state to true.
+     */
+
+    const showAlert = () => {
+        setShowAlert(true)
+    }
+
+
+    /**
+     * Makes the alert insivible 
+     * by changing its state to false.
+     */
+
+    const hideAlert = () => {
+        setShowAlert(false)
+    }
+
+
+    /**
+     * Makes the alert invisible when 
+     * the user presses the cancel button.
+     */
+
+    const cancelFavSupermarket = () => {
+        hideAlert()
+    }
+
  
+    /**
+     * Shows the alert with the name 
+     * of the supermarket pressed and
+     * saved its id in the state.
+     * 
+     * @param x the supermarket pressed
+     */
+
     const handleAddFavShopPress = (x) => {
         setAlertMessage(`Add ${x.name} on ${x.location} to favourites?`)
         showAlert()
         setSupermarketId(x.id)
     }
 
-    const cancelFavSupermarket = () => {
-        hideAlert()
-    }
+
+   /**
+    * Bookmarks the supermarket chosen and
+    * adds it to the previous screen.
+    */
 
     const confirmFavSupermarket = async () => {   
         let token = (await loadTokens()).token
@@ -44,23 +84,17 @@ const AddSupermarkets = ({ route }) => {
         const response = await fetch('https://gromceritestbackend2.herokuapp.com/graphql', payload)
                 .then(response => response.json())
                 .then(res => {
-                    console.log(supermarketId)
                     setAllSupermarkets(allSupermarkets.filter(supermarket => supermarket.id !== supermarketId))
-                setShowAlert(false)
-                console.log("Add supermarket request")
+                    setShowAlert(false)
                 })
-                getDataSync()
-                
+            getDataSync()    
         }
-      
-    const showAlert = () => {
-        setShowAlert(true)
-    }
-
-    const hideAlert = () => {
-        setShowAlert(false)
-    }
-
+    
+    /**
+     * Fetches the data from the
+     * previous screen so the user sees 
+     * his newly bookmarked supermarket.
+     */
 
     const getDataSync = async function() {
         getData(`{"query":"{user {supermarkets {id, name, location, image}}}"}`)
@@ -68,6 +102,12 @@ const AddSupermarkets = ({ route }) => {
             setSupermarkets(val.user.supermarkets)
         })
     }
+
+
+    /**
+     * Fetches all the non-bookmarked
+     * supermarkets and displays them.
+     */
 
     useEffect(() => {
         const getAllDataSync = async function() {
@@ -78,6 +118,7 @@ const AddSupermarkets = ({ route }) => {
         }
         getAllDataSync()
     }, [])
+
 
     return (
         <View style={styles.container}>
