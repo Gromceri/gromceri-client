@@ -1,85 +1,90 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { email } from './LoginScreen'
-import { StyleSheet, 
-    Text, 
-    View, 
-    TextInput, 
-    TouchableOpacity,
-    Button,
+import { StyleSheet,  
     ScrollView,
     Alert
  } from 'react-native';
 import { useState, useEffect } from 'react';
-import styles from '../Message'
-import Message from '../Message'
+import Message, { styles } from '../Message'
 import Widgets from '../Widgets';
-import { loadTokens } from '../../utility functions/asyncStorage'
-import { Ionicons } from '@expo/vector-icons';
-
+import { getData } from '../../utility functions/queryFetch'
 
 const Dashboard = ({ route, navigation }) => {
-    const { email } = route.params
-    const [username, setUsername] = useState(email)
+    const { whyDidItNotWork } = route.params
+
+    /**
+     * Navigates to the "Shop by 
+     * supermarket" screen.
+     */
 
     const handleShopBySupermarketPress = () => {
         navigation.navigate('Supermarkets')
     }
 
+    /**
+     * Navigates to the "Browse 
+     * your recipes" screen.
+     */
+
     const handleBrowseRecipesPress = () => {
        Alert.alert('To be implemented.') 
     }
+
+
+    /**
+     * Navigates to the "Add 
+     * product" screen.
+     */
 
     const handleAddProductPress = () => {
         Alert.alert('To be implemented.') 
      }
 
+
+     /**
+     * Navigates to the "Start 
+     * group recipe" screen.
+     */
+
      const handleStartGroupRecipePress = () => {
         Alert.alert('To be implemented.') 
      }
+
+
+     /**
+     * Navigates to the "Report 
+     * a problem" screen.
+     */
 
      const handleReportProblemPress = () => {
         Alert.alert('To be implemented.') 
      }
 
-    useEffect(() => {
-        async function urmom() {
-            let token = (await loadTokens()).token
-    
-            const data = `{"query":"{user {username}}"}`
-            const payload = {
-                method: 'POST',
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                 },
-                body: data
-            };
-    
-            fetch('https://gromceritestbackend2.herokuapp.com/graphql', payload)
-                .then(response => response.json())
-                .then(res => {
-                    setUsername(res.data.user.username)
-                }
-                )
-        }
-        urmom()
-    }, [])
+     /**
+      * Fetches the username from the
+      * user displays greeting message.
+      */
+
+    // useEffect(() => {
+    //     const getUsernameSync = async function() {   
+    //         getData(`{"query":"{user {username avatar}}"}`)
+    //             .then(val =>  {
+    //                 setUsername(res.data.user.username)   
+    //         })
+    //     }
+    // }, [])
 
     return (
         <ScrollView style={dashboardStyles.container}>
             <Message 
-                passedStyle={{
-                    alignSelf:'flex-start',
-                    margin: 25,
-                }}
-                message={'Hello,\n' + username + ' 👋'}/>
+                passedStyle={dashboardStyles.passedStyle}
+                message={'Hello,\n' + whyDidItNotWork + ' 👋'}/>
             <Widgets 
-            onPressSupermarkets={handleShopBySupermarketPress}
-            onPressRecipes={handleBrowseRecipesPress}
-            onPressProduct={handleAddProductPress}
-            onPressGroupRecipe={handleStartGroupRecipePress} 
-            onPressReport={handleReportProblemPress}
+                onPressSupermarkets={handleShopBySupermarketPress}
+                onPressRecipes={handleBrowseRecipesPress}
+                onPressProduct={handleAddProductPress}
+                onPressGroupRecipe={handleStartGroupRecipePress} 
+                onPressReport={handleReportProblemPress}
             />
         </ScrollView>
     )
@@ -89,6 +94,11 @@ const dashboardStyles = StyleSheet.create({
       flex: 1,
       display: 'flex',
       backgroundColor: '#313131',
+    },
+
+    passedStyle: {
+        alignSelf:'flex-start',
+        margin: 25,
     }
 })
 Dashboard.propTypes = {

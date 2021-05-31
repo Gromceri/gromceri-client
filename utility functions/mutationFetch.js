@@ -1,13 +1,13 @@
 import {loadTokens } from './asyncStorage'
 
 /**
- * Utility function to query data from the server.
- * Used for GET methods, does not do mutations.
- * @param queryString the query used to fetch the data
- * @returns the data fetched from the response
+ * Utility function to update server data.
+ * Used for POST, PUT methods (mutations).
+ * @param queryString the query used to update the data
+ * @returns the updated and fetched from the response
  */
 
-export const getData = async (queryString) => {
+export const postData = async (queryString) => {
     let token = (await loadTokens()).token
     
     const data = queryString      

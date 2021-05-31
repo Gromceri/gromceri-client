@@ -16,7 +16,6 @@ const Header = () => {
     )
 }
 
-
 const styles = StyleSheet.create({
     Header: {
         color: '#d25960',

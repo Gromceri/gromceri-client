@@ -23,7 +23,6 @@ const Categories = ({ route, navigation }) => {
 
     const handleSearchUpdate = (s) => {
         setSearch(s)
-        console.log(search)
     }
 
     /**

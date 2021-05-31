@@ -1,10 +1,9 @@
-import { getData } from '../../utility functions/queryFetch'
-import { TouchableOpacity, StyleSheet, View, Text, Dimensions, Image, ScrollView, Alert } from 'react-native'
+import { StyleSheet, View, ScrollView } from 'react-native'
 import Message from '../Message'
 import SmallWidget from '../SmallWidget'
 import React, { useEffect, useState } from 'react'
-import { loadTokens } from '../../utility functions/asyncStorage'
-import { arrayOfLocations } from './Supermarkets'
+import { getData } from '../../utility functions/queryFetch'
+import { postData } from '../../utility functions/mutationFetch'
 import AwesomeAlert from 'react-native-awesome-alerts';
 
 const AddSupermarkets = ({ route }) => {
@@ -55,10 +54,10 @@ const AddSupermarkets = ({ route }) => {
      * @param x the supermarket pressed
      */
 
-    const handleAddFavShopPress = (x) => {
-        setAlertMessage(`Add ${x.name} on ${x.location} to favourites?`)
+    const handleAddFavShopPress = (supermarket) => {
+        setAlertMessage(`Add ${supermarket.name} on ${supermarket.location} to favourites?`)
         showAlert()
-        setSupermarketId(x.id)
+        setSupermarketId(supermarket.id)
     }
 
 
@@ -67,28 +66,14 @@ const AddSupermarkets = ({ route }) => {
     * adds it to the previous screen.
     */
 
-    const confirmFavSupermarket = async () => {   
-        let token = (await loadTokens()).token
-        setShowProgress(true)    
-
-        const data = `{"query":"mutation {  addUserSupermarkets(input: ${supermarketId}) {  email  }}"}`       
-        const payload = {
-            method: 'POST',
-            headers: { 
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-                },
-            body: data
-        };
-
-        const response = await fetch('https://gromceritestbackend2.herokuapp.com/graphql', payload)
-                .then(response => response.json())
-                .then(res => {
-                    setAllSupermarkets(allSupermarkets.filter(supermarket => supermarket.id !== supermarketId))
-                    setShowAlert(false)
-                })
-            getDataSync()    
-        }
+    const confirmFavSupermarket = async function() {   
+        postData(`{"query":"mutation {  addUserSupermarkets(supermarketId: ${supermarketId}) {  email  }}"}`)
+            .then(val =>  {
+                setAllSupermarkets(allSupermarkets.filter(supermarket => supermarket.id !== supermarketId))
+                setShowAlert(false)
+                getSupermarketsSync()    
+        })
+    }
     
     /**
      * Fetches the data from the
@@ -96,13 +81,12 @@ const AddSupermarkets = ({ route }) => {
      * his newly bookmarked supermarket.
      */
 
-    const getDataSync = async function() {
+    const getSupermarketsSync = async function() {
         getData(`{"query":"{user {supermarkets {id, name, location, image}}}"}`)
         .then(val =>  {
             setSupermarkets(val.user.supermarkets)
         })
     }
-
 
     /**
      * Fetches all the non-bookmarked
@@ -110,38 +94,35 @@ const AddSupermarkets = ({ route }) => {
      */
 
     useEffect(() => {
-        const getAllDataSync = async function() {
+        const getAllSupermarketsSync = async function() {
             getData(`{"query":"{ nonFavouriteSupermarkets {  id, name, location, image }}"}`)
             .then(val =>  {
                 setAllSupermarkets(val.nonFavouriteSupermarkets)
             })
         }
-        getAllDataSync()
+        getAllSupermarketsSync()
     }, [])
 
 
     return (
         <View style={styles.container}>
-            <Message passedStyle={{
-                    alignContent:'center',
-                    margin: 25,
-                    textAlign: 'center'
-                }}
+            <Message passedStyle={passedStyle}
                 message="Add a favourite supermarket." />
             <ScrollView >
                 <View style={styles.scrollContainer}>
                     {allSupermarkets.map(supermarket => (
-                        <SmallWidget 
-                            key={supermarket.location}
-                            location={supermarket.location}
-                            onPress={() => {
-                                handleAddFavShopPress(supermarket)
-                            }}
-                            imageURL={supermarket.image} />
+                    <SmallWidget 
+                        key={supermarket.location}
+                        location={supermarket.location}
+                        onPress={() => {
+                            handleAddFavShopPress(supermarket)
+                        }}
+                        imageURL={supermarket.image} />
                     ))}
                    
                 </View>
             </ScrollView>
+
             <AwesomeAlert 
                 show={alert}
                 showProgress={showProgress}
@@ -157,9 +138,13 @@ const AddSupermarkets = ({ route }) => {
                 onConfirmPressed={confirmFavSupermarket}
                 onCancelPressed={cancelFavSupermarket}
             />
-            
         </View>
     )
+}
+const passedStyle = {
+    alignContent:'center',
+    margin: 25,
+    textAlign: 'center'
 }
 const styles = StyleSheet.create({
     container: {
@@ -176,9 +161,8 @@ const styles = StyleSheet.create({
     }
 })
 
-AddSupermarkets.propTypes = {
+AddSupermarkets.propTypes = { 
     
-
 }
 
 export default AddSupermarkets
