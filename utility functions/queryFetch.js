@@ -23,6 +23,9 @@ export const getData = async (queryString) => {
     return fetch('https://gromceritestbackend2.herokuapp.com/graphql', payload)
             .then(response => response.json())
             .then(res => {
+                if (res.errors) {
+                    console.log("That shit went wrong: ", res.errors[0])    
+                            }
                 const specificData = res.data
                 return specificData
             }) 

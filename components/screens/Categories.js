@@ -25,6 +25,10 @@ const Categories = ({ route, navigation }) => {
         setSearch(s)
     }
 
+    const handleCategoryPress = (category) => {
+        navigation.navigate('Products', { supermarket, category })
+    }
+
     /**
      * useEffect hook that fires with each
      * user input search in the search bar.
@@ -37,6 +41,7 @@ const Categories = ({ route, navigation }) => {
         setSearchResults(results)
 
     }, [search])
+
 
     /**
      * useEffect hook that fires on render.
@@ -87,7 +92,7 @@ const Categories = ({ route, navigation }) => {
                     style={styles.scrollContainer}>
                     <SmallWidget 
                         onPress={() => {
-                            Alert.alert("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+                            Alert.alert("browse all")
                         }}
                         location="Browse all"
                         imageURL="https://res.cloudinary.com/gromceri-test/image/upload/v1622160078/Food%20categories/all_hkffhp.jpg"
@@ -95,7 +100,7 @@ const Categories = ({ route, navigation }) => {
                     {!search ? categories.map(categories => (
                     <SmallWidget 
                         onPress={() => {
-                            Alert.alert("BITHCHHHHHHHHHHHHHH")
+                            handleCategoryPress(categories)
                         }}
                         key={categories.id}
                         location={categories.name.split(/(?=[A-Z])/).join(' ')}

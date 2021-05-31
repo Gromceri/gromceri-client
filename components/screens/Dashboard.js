@@ -60,25 +60,11 @@ const Dashboard = ({ route, navigation }) => {
         Alert.alert('To be implemented.') 
      }
 
-     /**
-      * Fetches the username from the
-      * user displays greeting message.
-      */
-
-    // useEffect(() => {
-    //     const getUsernameSync = async function() {   
-    //         getData(`{"query":"{user {username avatar}}"}`)
-    //             .then(val =>  {
-    //                 setUsername(res.data.user.username)   
-    //         })
-    //     }
-    // }, [])
-
     return (
         <ScrollView style={dashboardStyles.container}>
             <Message 
                 passedStyle={dashboardStyles.passedStyle}
-                message={'Hello,\n' + whyDidItNotWork + ' 👋'}/>
+                message={'Hello,\n' + whyDidItNotWork + '. 👋'}/>
             <Widgets 
                 onPressSupermarkets={handleShopBySupermarketPress}
                 onPressRecipes={handleBrowseRecipesPress}
