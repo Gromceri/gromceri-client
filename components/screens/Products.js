@@ -4,6 +4,7 @@ import { StyleSheet, View, Text, ScrollView, Alert, Image } from 'react-native';
 import Message from '../Message'
 import UserSearchBar from '../UserSearchBar'
 import { getData } from '../../utility functions/queryFetch'
+import Widget from '../Widget'
 
 
 
@@ -14,7 +15,9 @@ const Products = ({ route, navigation }) => {
 
     useEffect(() => {
         const getProductsSync = async function() {
-            getData(`{"query":"{ products(where: { category: {name: {eq: \\"${category.name}\\"}} supermarkets: { all: {  name: {  eq: \\"${supermarket.name}\\" }  } }}) {name supermarkets { name }  }}"}`)
+            const queryString = `{"query":"{ products(where: { category: {name: {eq: \\"${category.name}\\"}} supermarkets: { all: {  name: {  eq: \\"${supermarket.name}\\" }  } }}) {name supermarkets { name }  }}"}`
+            console.log(queryString)
+            getData(queryString)
             .then(val =>  setProducts(val.products))
             console.log(products)
         }
@@ -57,6 +60,15 @@ const Products = ({ route, navigation }) => {
             <ScrollView>
                 <View 
                     style={styles.scrollContainer}>
+                    {products.map(product => (
+                        <Widget
+                        onPress={() => {
+                           Alert.alert("You pressed the product")
+                        }}
+                        key={product.id}
+                        message={product.name}
+                         />
+                    ))}
                     <Text>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</Text>
                 </View>
             </ScrollView>
@@ -95,8 +107,6 @@ const styles = StyleSheet.create({
     },
     scrollContainer: {
         flex: 1,
-        flexDirection: 'row',
-        flexWrap: 'wrap',
         justifyContent: "space-evenly",
     },
 

@@ -21,6 +21,7 @@ export const styles = StyleSheet.create({
         color: '#d0d0d0',
         fontSize: 35,
         alignSelf: 'center',
+
     }
 })
 

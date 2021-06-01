@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { getData } from '../../utility functions/queryFetch'
 import { postData } from '../../utility functions/mutationFetch'
 import AwesomeAlert from 'react-native-awesome-alerts';
+import UhOhMessage from '../UhOhMessage'
 
 const AddSupermarkets = ({ route }) => {
     const { setSupermarkets } = route.params
@@ -109,8 +110,8 @@ const AddSupermarkets = ({ route }) => {
             <Message passedStyle={passedStyle}
                 message="Add a favourite supermarket." />
             <ScrollView >
-                <View style={styles.scrollContainer}>
-                    {allSupermarkets.map(supermarket => (
+                <View style={allSupermarkets[0] ? styles.scrollContainer : styles.scrollContainer2}>
+                    {allSupermarkets[0] ? allSupermarkets.map(supermarket => (
                     <SmallWidget 
                         key={supermarket.location}
                         location={supermarket.location}
@@ -118,7 +119,9 @@ const AddSupermarkets = ({ route }) => {
                             handleAddFavShopPress(supermarket)
                         }}
                         imageURL={supermarket.image} />
-                    ))}
+                    )) : <UhOhMessage 
+                        message={'Looks like there are no supermarkets left to add.'}
+                        iconName='alert-circle'/>}
                    
                 </View>
             </ScrollView>
@@ -137,6 +140,19 @@ const AddSupermarkets = ({ route }) => {
                 confirmButtonColor="#d25960"
                 onConfirmPressed={confirmFavSupermarket}
                 onCancelPressed={cancelFavSupermarket}
+                titleStyle={{
+                    fontSize: 25
+                }}
+                messageStyle={{
+                    textAlign: 'center',
+                    fontSize: 18
+                }}
+                cancelButtonTextStyle={{
+                    fontSize: 18
+                }}
+                confirmButtonTextStyle={{
+                    fontSize: 18
+                }}
             />
         </View>
     )
@@ -157,7 +173,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
         justifyContent: "space-evenly",
-
+    },
+    scrollContainer2: {
+        flex: 1,
+        flexWrap: 'nowrap',
+        justifyContent: "space-evenly",
     }
 })
 

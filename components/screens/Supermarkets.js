@@ -159,6 +159,19 @@ const Supermarkets = ({ navigation }) => {
                 confirmButtonColor="#d25960"
                 onConfirmPressed={confirmDeleteFavShopLongPress}
                 onCancelPressed={cancelFavSupermarket}
+                titleStyle={{
+                    fontSize: 25
+                }}
+                messageStyle={{
+                    textAlign: 'center',
+                    fontSize: 18
+                }}
+                cancelButtonTextStyle={{
+                    fontSize: 18
+                }}
+                confirmButtonTextStyle={{
+                    fontSize: 18
+                }}
             />
         </View>
     )

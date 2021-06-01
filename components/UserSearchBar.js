@@ -10,6 +10,8 @@ const UserSearchBar = ({ placeholderMessage, value, onChangeText }) => {
             <SearchBar 
             inputContainerStyle={styles.inputContainerStyle}
             containerStyle={styles.searchBarContainer}
+            placeholderTextColor='#d0d0d0'
+            searchIcon={{color: '#d0d0d0'}}
                 placeholder={placeholderMessage}
                 value={value}
                 onChangeText={onChangeText}
@@ -19,16 +21,21 @@ const UserSearchBar = ({ placeholderMessage, value, onChangeText }) => {
 }
 export const styles = StyleSheet.create({
     searchBarContainer: {
-        backgroundColor: 'gray',
+        backgroundColor: '#d25960',
         borderRadius: 50,
+        borderWidth: 1,
+        borderRightColor: '#d25960',
+        borderLeftColor: '#d25960',
 
-        borderWidth: 0,
-        marginTop: 7.5,
-        padding: 0
+        borderBottomColor: 'transparent',
+        borderTopColor: 'transparent',
+        marginTop: 15,
+        padding: 1, 
     },
     inputContainerStyle: {
         borderRadius: 50,
-        backgroundColor: 'white'
+        backgroundColor: '#424141',
+        
     },
 
 })

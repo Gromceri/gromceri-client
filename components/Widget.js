@@ -30,16 +30,20 @@ const Widget = ({ order, message, passedStyle, iconName, iconBackgroundColor, on
 
                 <View
                     style={{backgroundColor: iconBackgroundColor,
-                    borderRadius: 35,
+                    borderRadius: 100,
                     borderColor: '#dedede',
                     borderWidth: 0,
+
                     }}
                 >
                     <Ionicons 
                         name={iconName}
                         style={{fontSize: 35,
-                        padding: 15}}
-                        color='white'>
+                        padding: 15,
+                        textAlign: 'center',
+                    }}
+                        color='white'
+                        >
                         
                     </Ionicons>
                     
