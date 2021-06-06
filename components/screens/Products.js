@@ -15,7 +15,7 @@ const Products = ({ route, navigation }) => {
 
     useEffect(() => {
         const getProductsSync = async function() {
-            const queryString = `{"query":"{ products(where: { category: {name: {eq: \\"${category.name}\\"}} supermarkets: { all: {  name: {  eq: \\"${supermarket.name}\\" }  } }}) {name supermarkets { name }  }}"}`
+            const queryString = `{"query":"{ products(where: { category: {name: {eq: \\"${category.name}\\"}} }) {name productMetadata { price supermarket { name } }  }}"}`
             console.log(queryString)
             getData(queryString)
             .then(val =>  setProducts(val.products))
@@ -65,7 +65,7 @@ const Products = ({ route, navigation }) => {
                         onPress={() => {
                            Alert.alert("You pressed the product")
                         }}
-                        key={product.id}
+                        key={product.name}
                         message={product.name}
                          />
                     ))}

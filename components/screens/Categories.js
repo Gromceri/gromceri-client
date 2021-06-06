@@ -52,7 +52,7 @@ const Categories = ({ route, navigation }) => {
 
     useEffect(() => {
         const getDataSync = async function() {
-            getData(`{"query":" {productCategories {id, name, image}}"}`)
+            getData(`{"query":" {productCategories {name, image}}"}`)
             .then(val =>  setCategories(val.productCategories))
         }
         getDataSync()  
@@ -102,7 +102,7 @@ const Categories = ({ route, navigation }) => {
                         onPress={() => {
                             handleCategoryPress(categories)
                         }}
-                        key={categories.id}
+                        key={categories.name}
                         location={categories.name.split(/(?=[A-Z])/).join(' ')}
                         imageURL={categories.image} /> )) 
 
@@ -111,7 +111,7 @@ const Categories = ({ route, navigation }) => {
                         onPress={() => {
                             Alert.alert("BITHCHHHHHHHHHHHHHH")
                         }}
-                        key={results.id}
+                        key={results.name}
                         location={results.name.split(/(?=[A-Z])/).join(' ')}
                         imageURL={results.image} /> )) 
                     }
