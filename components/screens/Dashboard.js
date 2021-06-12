@@ -2,11 +2,14 @@ import React from 'react'
 import { email } from './LoginScreen'
 import { StyleSheet,  
     ScrollView,
-    Alert
+    Alert,
+    Text
  } from 'react-native';
 import { useState, useEffect } from 'react';
 import Message, { styles } from '../Message'
 import Widgets from '../Widgets';
+import BigWidget from '../BigWidget';
+
 import { getData } from '../../utility functions/queryFetch'
 
 const Dashboard = ({ route, navigation }) => {
@@ -72,6 +75,7 @@ const Dashboard = ({ route, navigation }) => {
                 onPressGroupRecipe={handleStartGroupRecipePress} 
                 onPressReport={handleReportProblemPress}
             />
+            
         </ScrollView>
     )
 }

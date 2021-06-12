@@ -4,7 +4,8 @@ import { StyleSheet, View, Text, ScrollView, Alert, Image } from 'react-native';
 import Message from '../Message'
 import UserSearchBar from '../UserSearchBar'
 import { getData } from '../../utility functions/queryFetch'
-import Widget from '../Widget'
+import BigWidget from '../BigWidget'
+import { map } from 'lodash';
 
 
 
@@ -15,13 +16,17 @@ const Products = ({ route, navigation }) => {
 
     useEffect(() => {
         const getProductsSync = async function() {
-            const queryString = `{"query":"{ products(where: { category: {name: {eq: \\"${category.name}\\"}} }) {name productMetadata { price supermarket { name } }  }}"}`
-            console.log(queryString)
+            const queryString = `{"query":"{   products(where: {     and: {       category: {         name: {           eq: \\"${category.name}\\"        }       }       productMetadata: {         all: {           supermarket: {             id: {               eq: ${supermarket.id}             }           }         }       }     }   }) {     name   image id  productMetadata {       price       supermarket {         name        }     }   } }"}`
+
             getData(queryString)
-            .then(val =>  setProducts(val.products))
-            console.log(products)
+            .then(val =>  {
+                console.log(val)
+                setProducts(val.products)
+            })
         }
-        getProductsSync()  
+        getProductsSync()
+        products.map(product => {console.log(product.name)})
+      
     }, [])
     return (
         <View style={styles.container}>
@@ -61,15 +66,16 @@ const Products = ({ route, navigation }) => {
                 <View 
                     style={styles.scrollContainer}>
                     {products.map(product => (
-                        <Widget
+                        <BigWidget
                         onPress={() => {
                            Alert.alert("You pressed the product")
                         }}
-                        key={product.name}
-                        message={product.name}
+                        key={product.id}
+                        text={product.name}
+                        image={product.image}
+                        price={product.productMetadata.map(productMetadata => productMetadata.price)}
                          />
                     ))}
-                    <Text>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</Text>
                 </View>
             </ScrollView>
              

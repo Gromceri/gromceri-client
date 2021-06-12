@@ -1,0 +1,1 @@
+{"query":"{   products(where: {     and: {       category: {         name: {           eq: \"Fruits\"         }       }       productMetadata: {         all: {           supermarket: {             id: {               eq: 1             }           }         }       }     }   }) {     name     productMetadata {       price       supermarket {         name        }     }   } }"}
