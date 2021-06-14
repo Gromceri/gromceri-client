@@ -4,15 +4,53 @@ import { StyleSheet, View, Text, ScrollView, Alert, Image } from 'react-native';
 import Message from '../Message'
 import UserSearchBar from '../UserSearchBar'
 import { getData } from '../../utility functions/queryFetch'
+import { postData } from '../../utility functions/mutationFetch'
 import BigWidget from '../BigWidget'
 import { map } from 'lodash';
 
 
+let isFirstIteration = true;
+let arr = [];
 
 const Products = ({ route, navigation }) => {
     const { supermarket, category } = route.params
     const imageURL = supermarket.image
     const [products, setProducts] = useState([])
+    const [cart, setCart] =  useState([])
+    const [isAdded, setIsAdded] = useState([])
+    const [colour, setBorderColor] = useState([])
+
+    const handleAddProductToCart = async (index, product) => {
+        console.log("It is the first iteration: ", isFirstIteration)
+        for (var i = 0; (i < products.length && isFirstIteration); i++) {
+            isAdded[i] = false;
+            arr[i] = '#424141' 
+        }
+
+        // console.log(arr)
+        isFirstIteration = false;
+
+        // this works, array is correct, need to change border color now
+        // console.log("This is the final array after press event: \n", arr) 
+
+        if (!isAdded[index]) {
+        postData(`{"query":"mutation { addProductToCart(productId: ${product.id}, count: 1) { email }}"}`)
+            let newArr = [...colour]
+            newArr[index] = '#3c7d19'
+            isAdded[index] = true
+            setBorderColor(newArr)
+
+        } else {
+            postData(`{"query":"mutation { removeProductFromCart(productId: ${product.id}, removeAll: true) { email }}"}`)
+            let newArr = [...colour]
+            newArr[index] = '#424141'
+            isAdded[index] = false
+            setBorderColor(newArr)
+        }
+
+
+
+    }
 
     useEffect(() => {
         const getProductsSync = async function() {
@@ -20,7 +58,7 @@ const Products = ({ route, navigation }) => {
 
             getData(queryString)
             .then(val =>  {
-                console.log(val)
+                // console.log(val)
                 setProducts(val.products)
             })
         }
@@ -65,15 +103,14 @@ const Products = ({ route, navigation }) => {
             <ScrollView>
                 <View 
                     style={styles.scrollContainer}>
-                    {products.map(product => (
+                    {products.map((product, index) => (
                         <BigWidget
-                        onPress={() => {
-                           Alert.alert("You pressed the product")
-                        }}
+                        onPress={() => handleAddProductToCart(index, product)}
+                        passedStyle={colour[index]}
                         key={product.id}
                         text={product.name}
                         image={product.image}
-                        price={product.productMetadata.map(productMetadata => productMetadata.price)}
+                        price={product.productMetadata.map(productMetadata => productMetadata.price.toFixed(2))}
                          />
                     ))}
                 </View>

@@ -8,12 +8,18 @@ import { StyleSheet,
  } from 'react-native';
 import Message from './Message';
 
-const BigWidget = ({ onPress, text, image, price }) => {
+const BigWidget = ({ onPress, text, image, price, passedStyle, isWhite }) => {
+    console.log("Passed style", passedStyle)
+
+    if (!passedStyle) {
+        passedStyle = '#424141'
+    }
+    
     return (
         <View>
             <TouchableOpacity 
             onPress={onPress}
-            style={ styles.BigWidget }>
+            style={ [styles.BigWidget, {backgroundColor: passedStyle}] }>
                 <View style={ styles.PhotoContainer }>
                     <Image
                     style={{ width: "100%", height: "100%", borderRadius: 10}}
@@ -26,7 +32,7 @@ const BigWidget = ({ onPress, text, image, price }) => {
                    <Message 
                         message={text}
                         passedStyle={{fontSize: 27.5}} />
-                   <Text style={{fontSize: 20, color: 'white', textAlign: 'center'}}>{price} {"\n"}weight{"\n"}location </Text>
+                   <Text style={{fontSize: 20, color: '#d0d0d0', textAlign: 'center'}}>{'\n'}€ {price} {"\n"}500 grams{"\n"}Aisle 5, end </Text>
 
                 </View>
 
