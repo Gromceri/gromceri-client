@@ -9,11 +9,11 @@ import { StyleSheet,
 import Message from './Message';
 
 const BigWidget = ({ onPress, text, image, price, passedStyle, isWhite }) => {
-    console.log("Passed style", passedStyle)
+    // console.log("Passed style", passedStyle)
 
-    if (!passedStyle) {
-        passedStyle = '#424141'
-    }
+    // if (!passedStyle) {
+    //     passedStyle = '#424141'
+    // }
     
     return (
         <View>

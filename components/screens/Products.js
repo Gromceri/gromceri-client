@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { StyleSheet, View, Text, ScrollView, Alert, Image } from 'react-native';
 import Message from '../Message'
 import UserSearchBar from '../UserSearchBar'
@@ -19,6 +19,7 @@ const Products = ({ route, navigation }) => {
     const [cart, setCart] =  useState([])
     const [isAdded, setIsAdded] = useState([])
     const [colour, setBorderColor] = useState([])
+    const previousValues = useRef({ cart, products })
 
     const handleAddProductToCart = async (index, product) => {
         console.log("It is the first iteration: ", isFirstIteration)
@@ -27,11 +28,9 @@ const Products = ({ route, navigation }) => {
             arr[i] = '#424141' 
         }
 
-        // console.log(arr)
         isFirstIteration = false;
 
-        // this works, array is correct, need to change border color now
-        // console.log("This is the final array after press event: \n", arr) 
+
 
         if (!isAdded[index]) {
         postData(`{"query":"mutation { addProductToCart(productId: ${product.id}, count: 1) { email }}"}`)
@@ -51,21 +50,43 @@ const Products = ({ route, navigation }) => {
 
 
     }
+    useEffect(() => {
+        let newArr = []
+        if (
+          previousValues.current.cart !== cart &&
+          previousValues.current.products !== products
+        ) {
+            console.log("both changed")
+            previousValues.current = { cart, products };
+            console.log("Sizes of arrays: ", cart.length, products.length)
+            let newCart = cart.map(c => c.product).map(c => c.id)
+
+            for (let i = 0; i < products.length; i++) {
+          
+       
+            newCart.includes(products[i].id) ? newArr[i] = 'green' : newArr[i] = '#424141'
+                
+            }
+            console.log(newArr)
+            setBorderColor(newArr);
+    }
+      });
+
 
     useEffect(() => {
         const getProductsSync = async function() {
-            const queryString = `{"query":"{   products(where: {     and: {       category: {         name: {           eq: \\"${category.name}\\"        }       }       productMetadata: {         all: {           supermarket: {             id: {               eq: ${supermarket.id}             }           }         }       }     }   }) {     name   image id  productMetadata {       price       supermarket {         name        }     }   } }"}`
+            const queryString = `{"query":"{  cartQuery: user {  cart {  products {  product {  name id  }  }  }  }  productQuery: products(where: {  and: {  category: {  name: {  eq: \\"${category.name}\\"  }  }  productMetadata: {  all: {  supermarket: {  id: {  eq: ${supermarket.id}  }  }  }  }  }  }) {  name  image  id  productMetadata {  price  supermarket {  name  }  }  } }"}`
 
             getData(queryString)
             .then(val =>  {
-                // console.log(val)
-                setProducts(val.products)
+                setProducts(val.productQuery)
+                setCart(val.cartQuery.cart.products)
             })
         }
-        getProductsSync()
-        products.map(product => {console.log(product.name)})
-      
+        getProductsSync()      
     }, [])
+
+
     return (
         <View style={styles.container}>
             <View style={styles.mediumContainer}>
