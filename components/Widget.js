@@ -1,12 +1,8 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { StyleSheet, 
     Text, 
     View, 
-    TextInput, 
-    Image,
     TouchableOpacity,
-    Button
  } from 'react-native';
  import { Ionicons } from '@expo/vector-icons';
 
@@ -22,9 +18,8 @@ const Widget = ({ order, message, passedStyle, iconName, iconBackgroundColor, on
                 onPress={onPress}>
 
                 <Text 
-                    style={{color: '#dedede',
-                        fontSize: 27.5
-                    }}>
+                    style={{ color: '#dedede',
+                        fontSize: 27.5 }}>
                     {message}
                 </Text>
 
@@ -33,18 +28,14 @@ const Widget = ({ order, message, passedStyle, iconName, iconBackgroundColor, on
                     borderRadius: 100,
                     borderColor: '#dedede',
                     borderWidth: 0,
-
-                    }}
-                >
+                }}>
                     <Ionicons 
                         name={iconName}
                         style={{fontSize: 35,
                         padding: 15,
                         textAlign: 'center',
-                    }}
-                        color='white'
-                        >
-                        
+                        }}
+                        color='white'>
                     </Ionicons>
                     
                 </View>
@@ -55,7 +46,6 @@ const Widget = ({ order, message, passedStyle, iconName, iconBackgroundColor, on
 
 export const styles = StyleSheet.create({
     Widget: {
-        backgroundColor: '#424141',
         borderRadius: 15,
         justifyContent: 'space-evenly',
         padding: 10,

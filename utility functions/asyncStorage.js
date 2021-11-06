@@ -6,6 +6,14 @@ const storage = new Storage({
    defaultExpires: null, 
 })
 
+
+/**
+ * @param token the token that keeps the user
+ * logged in that is saved on his device
+ * 
+ * @param refreshToken the token that refreshes
+ * the previous token after 30 minutes pass
+ */
 const saveTokens = (token, refreshToken) => {
     storage.save({
         key: 'tokens',
@@ -17,6 +25,10 @@ const saveTokens = (token, refreshToken) => {
     })
 }
 
+/**
+ * Return the authentication tokens
+ * @returns 
+ */
 const loadTokens = () => {
     return storage.load({
         key: 'tokens'

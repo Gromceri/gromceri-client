@@ -70,7 +70,8 @@ const AddSupermarkets = ({ route }) => {
     const confirmFavSupermarket = async function() {   
         postData(`{"query":"mutation {  addUserSupermarkets(supermarketId: ${supermarketId}) {  email  }}"}`)
             .then(val =>  {
-                setAllSupermarkets(allSupermarkets.filter(supermarket => supermarket.id !== supermarketId))
+                setAllSupermarkets(allSupermarkets
+                    .filter(supermarket => supermarket.id !== supermarketId))
                 setShowAlert(false)
                 getSupermarketsSync()    
         })

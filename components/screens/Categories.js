@@ -12,34 +12,43 @@ import { getData } from '../../utility functions/queryFetch'
 const Categories = ({ route, navigation }) => {
     const { supermarket } = route.params
     const imageURL = supermarket.image
+
     const [categories, setCategories] = useState([])
     const [search, setSearch] = useState('')
     const [searchResults, setSearchResults] = useState([]);
+
 
     /**
      * Sets the search to the string input.
      * @param s the search string
      */
-
     const handleSearchUpdate = (s) => {
         setSearch(s)
     }
 
+
+    /**
+     * Navigates to the supermarket
+     * specific products.
+     * @param category the category the
+     * user wants to view products for 
+     */
     const handleCategoryPress = (category) => {
         navigation.navigate('Products', { supermarket, category })
     }
+
 
     /**
      * useEffect hook that fires with each
      * user input search in the search bar.
      * Used for filtering the categories.
      */
-
     useEffect(() => {
         const results = categories
-        .filter(category => category.name.toLowerCase().includes(search))
-        setSearchResults(results)
+            .filter(category => category.name
+            .toLowerCase().includes(search))
 
+        setSearchResults(results)
     }, [search])
 
 
@@ -49,7 +58,6 @@ const Categories = ({ route, navigation }) => {
      * and display the data from the server.
      * Used to get the product categories.
      */
-
     useEffect(() => {
         const getDataSync = async function() {
             getData(`{"query":" {productCategories {name, image}}"}`)
@@ -60,9 +68,7 @@ const Categories = ({ route, navigation }) => {
 
     return (
         <View style={styles.container}>
-
             <View style={styles.mediumContainer}>
-
                 <View style={styles.smallContainer}>
                     <Message 
                         message="I am going to"
@@ -76,6 +82,7 @@ const Categories = ({ route, navigation }) => {
                         style={styles.image}
                     />
                 </View>
+
                 <View>
                     <Message 
                         message="searching for..."
@@ -87,6 +94,7 @@ const Categories = ({ route, navigation }) => {
                     />
                 </View>
             </View>
+            
             <ScrollView>
                 <View 
                     style={styles.scrollContainer}>
@@ -109,7 +117,7 @@ const Categories = ({ route, navigation }) => {
                         : searchResults.map(results => (
                     <SmallWidget 
                         onPress={() => {
-                            Alert.alert("BITHCHHHHHHHHHHHHHH")
+                            handleCategoryPress(results)
                         }}
                         key={results.name}
                         location={results.name.split(/(?=[A-Z])/).join(' ')}

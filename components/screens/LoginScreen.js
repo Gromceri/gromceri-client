@@ -54,7 +54,7 @@ export default function LoginScreen({ navigation }) {
 		fetch('https://gromceritestbackend2.herokuapp.com/api/authmanagement/login', payload)
 			.then(response => response.json())
 			.then(data => {
-				if (data.errors!==null) {
+				if (data.errors) {
 
 					if (data.errors.Email) {
 						Alert.alert(data.errors.Email[0])

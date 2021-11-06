@@ -94,7 +94,8 @@ const Supermarkets = ({ navigation }) => {
         setSupermarketId(supermarket.id)
         postData(`{"query":"mutation {  removeUserSupermarkets(supermarketId: ${supermarketId}) {  email  }}"}`)
             .then(val =>  {
-                setSupermarkets(supermarkets.filter(supermarket => supermarket.id !== supermarketId))
+                setSupermarkets(supermarkets
+                    .filter(supermarket => supermarket.id !== supermarketId))
                 setShowAlert(false)
         })
     }
