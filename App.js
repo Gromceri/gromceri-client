@@ -7,6 +7,7 @@ import LoginScreen from './components/screens/LoginScreen';
 import Supermarkets from './components/screens/Supermarkets';
 import Categories from './components/screens/Categories'
 import Products from './components/screens/Products'
+import Recipes from './components/screens/Recipes'
 import AddSupermarkets from './components/screens/AddSupermarkets';
 import { HeaderButton, HeaderButtons, Item } from 'react-navigation-header-buttons'
 import { Ionicons } from '@expo/vector-icons';
@@ -26,9 +27,7 @@ export default function App() {
         <Stack.Screen 
           name='Login'
           component={LoginScreen}
-          options={{
-            
-          }}
+          options={{}}
           />
 
         <Stack.Screen 
@@ -93,6 +92,14 @@ export default function App() {
           <Stack.Screen 
             name='Products'
             component={Products}
+            options={{
+              
+            }}
+          />
+
+          <Stack.Screen 
+            name='Recipes'
+            component={Recipes}
             options={{
               
             }}

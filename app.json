@@ -4,9 +4,9 @@
     "slug": "gromceri-client",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./material/picture.jpg",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./material/picture.jpg",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -23,12 +23,12 @@
       "softwareKeyboardLayoutMode": "pan",
 
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./material/picture.jpg",
         "backgroundColor": "#FFFFFF"
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./mayerial/picture.jpg"
     }
   }
 }

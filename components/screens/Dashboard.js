@@ -24,7 +24,8 @@ const Dashboard = ({ route, navigation }) => {
      */
 
     const handleBrowseRecipesPress = () => {
-       Alert.alert('To be implemented.') 
+        navigation.navigate('Recipes')
+
     }
 
 
