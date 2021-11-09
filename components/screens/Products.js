@@ -53,7 +53,7 @@ const Products = ({ route, navigation }) => {
         // the state arrays for highlighting
         if (!isAdded[index]) {
             postData(`{"query":"mutation { addProductToCart(productId: ${product.id}, count: 1) { email }}"}`)
-            newColours[index] = 
+            newColours[index] = "green"
             newBooleans[index] = true
             
             setIsAdded(newBooleans)

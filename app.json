@@ -28,7 +28,7 @@
       }
     },
     "web": {
-      "favicon": "./mayerial/picture.jpg"
+      "favicon": "./material/picture.jpg"
     }
   }
 }

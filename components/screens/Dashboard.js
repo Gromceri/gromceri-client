@@ -35,7 +35,7 @@ const Dashboard = ({ route, navigation }) => {
      */
 
     const handleAddProductPress = () => {
-        Alert.alert('To be implemented.') 
+        navigation.navigate('AddProduct') 
      }
 
 

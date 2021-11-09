@@ -32,7 +32,7 @@ const Widgets = ({message, icon, onPressReport, onPressGroupRecipe,
                 passedStyle: '#424141',
                 iconName: "cart-outline",
                 iconBackgroundColor: "#3e5dca",
-                onPress: onPressRecipes
+                onPress: onPressProduct
             },
 
             {

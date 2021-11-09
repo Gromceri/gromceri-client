@@ -5,8 +5,6 @@ import { View, ScrollView, StyleSheet } from 'react-native'
 import RecipeList from '../RecipeList'
 
 const Recipes = () => {
-  
-
     return (
         <ScrollView style={styles.container}>
             <Message 

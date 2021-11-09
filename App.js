@@ -11,6 +11,7 @@ import Recipes from './components/screens/Recipes'
 import AddSupermarkets from './components/screens/AddSupermarkets';
 import { HeaderButton, HeaderButtons, Item } from 'react-navigation-header-buttons'
 import { Ionicons } from '@expo/vector-icons';
+import { AddProduct } from './components/screens/AddProduct';
 
 export const IoniconsHeaderButton = (props) => (
   <HeaderButton IconComponent={Ionicons} iconSize={30} {...props} />
@@ -100,6 +101,14 @@ export default function App() {
           <Stack.Screen 
             name='Recipes'
             component={Recipes}
+            options={{
+              
+            }}
+          />
+
+          <Stack.Screen 
+            name='AddProduct'
+            component={AddProduct}
             options={{
               
             }}
